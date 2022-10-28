@@ -1,0 +1,9 @@
+What is the difference between shell module and command line module?
+A)  The shell is user interface to access the services of an operating system where as CLI - 
+command line interface is a computer program that processes commands in the form of line of text. 
+The user typically interacts with shell via command line interface
+
+What is host-key-ckecking?
+Checking host keys guards against server spoofing and man in the middle attacks. 
+when ever the host reinstalls and has a different keys in Known_hosts then error occurs until it get corrected.
+
