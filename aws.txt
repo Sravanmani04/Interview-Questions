@@ -1,0 +1,34 @@
+
+What is NACl?
+
+NACL - Network Access control list
+
+     it is a security layer for the vpc-subnets
+     This efficiently manages and controls the traffic that moves around the subnets
+     its an optional layer, but it adds another security layer to aws services.
+
+Components of NACL
+Following are the components of Network Access Control List (NACL): 
+
+Rule number: Every rule is assigned a unique number. 
+The rule’s priority is also based on the number it is assigned. 
+When it matches to a specific request or traffic, this rule is applied to the request, 
+irrespective of whether another high-numbered rule contradicts it or not.  
+Rules are created with specific increments, 
+like the difference between 2 rules is either 1,10, 100 and all the rules created have this same difference.  
+
+Type: This tells about the type of traffic, like SSH, HTTP, HTTPS.  
+Protocol: Protocol is a set of rules, that is applied to every request, ex: http, https, ICMP, SSH. 
+Portrange: The listening port, which takes in the request from the user, such as HTTP is associated with port 80.  
+Inboundrules: Also known as source. These rules talk about the source from where the request or traffic is coming from,
+and about the destination port/ the port through which the response is sent.  
+Outboundrules: Also known as destination. These rules talk about where the response should be sent and about the destination port.  
+Allow/Deny: Whether the specific traffic has to be allowed or denied.  
+There are two types of NaCl: 
+
+Customized NACL: It can also be understood as a user-defined NACL,
+ and its inherent characteristic is to deny any incoming and outgoing traffic until a rule is added to handle the traffic.  
+Default NACL: This is the opposite of customized NACL, which allows all the traffic to flow in and out of the network. 
+It also comes with a specific rule which is associated with a rule number, and it can’t be modified or deleted. 
+When the request doesn’t match with its associated rule, the access to it is denied. When a rule is added or removed,
+changes are automatically applied to the subnets which are associated with it.  
