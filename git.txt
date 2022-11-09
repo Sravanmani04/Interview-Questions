@@ -1,0 +1,68 @@
+
+what is git merge?
+git merge is used to combine two branches. 
+suppose lets say i have 2 branches dev and test. I have commited 2commits to dev and 3 commits to test and 
+after test i have one more commit added to dev branch now i wanted to merge dev with test. 
+to do so get into dev branch and by git chechout dev and do git merge test. 
+now both the branches are merged in linear fashion. and merge will be the latest commit. 
+
+What is a git rebase?
+git rebase is used to rearrange the commit history of branches. 
+lets say i have 2 branches brancha and branchb with 2 commits made in brancha and 3 commits in branchb and 
+one more latest commit in brancha total of 6 commits. and now i want to make branchb branch commits as the 
+lastest commits for that i go to branchb and rebase branch a. to make these commits as latest commits 
+go to branch a and merge branch b.
+
+How do you rearrange the commit order?
+git rebase -i HEAD~4, where it opens an editor and in that we reaarange commits in what ever order we require.
+
+How do you merge commits?
+merging commits  means removing the commits. a commits are meaningful milestones achieved by the developer. 
+if a developer thinks that the particular commit is not worthy and want to delete it, 
+then use git rebase -i Head~10 and it opens editor and in that 
+you can replace pick with squash so that it gets deleted.
+
+what is git cherry-pick?
+git cherry-pick is used to add selective commits of one branch to another. 
+lets say i have 2 commits a and b in abracnch and 3 commits c d f  in branch b. 
+now i want to add c and f to branch a. 
+to do so get the commitids of c and f and execute commans git cherry-pick <commitidofc> <coomitidoff>
+
+What is git stash?
+it gets applied on staged files. To leave the unfinished work and wanted to hide, 
+so that git cannot get access to it we use git stash -u, to list staged files (git stash list),
+to get back the staged files (git stash pop)
+to get the older statsh out git stash pop stash@stash number
+
+What is git ammend?
+when ever a developer changes a minor changes to a file and instead of commiting and just want to ammend it by 
+executing git commit --ammend -m"b".
+
+How do you go back to previous versions of code git?
+git reset --hard <commitid>
+
+What is the difference between git pull and git fetch?
+Git fetch is the command which tells the local repo that there are changes available in the remote repository,
+without making the changes in the working directory where as 
+on the other hand git pull command executes by making changes in the working dirctory from the remote repository.
+
+What is git revert?
+Its like undo, lets say we have done 3 commits and i wanted to revert latest commit .
+this can be achieved by "git revert HEAD"
+if i want to undo changes in second commit - git revert <second commit id>
+
+git end to end configuration?
+create a directory > 
+git init 
+git config --global user.name <user.name>
+git config --global user.email <user.email>
+create file
+git status to see untracked file
+git add <nameoffile> to move to staging area
+git commit -m"message" to commit the files
+git remote add <remote-name> <remote-repo-url> to add a remote repository
+git push -u <remote-name> <local branch name>
+git remote -v to see the url configured
+cat .git/config to see the local-repo cofiguration details
+cat .gitconfig to see the global configurations
+
