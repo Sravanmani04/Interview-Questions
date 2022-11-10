@@ -1,0 +1,131 @@
+What is Docker namespace?
+Docker uses the technology called namespaces to create containers in an isolated workspace. 
+When ever we run a container it creates a set of namespaces for that container that isolates it from host.
+These namespaces are the layer of isolation.
+
+How do you see the ip address of dockercontainer?
+we can use docker inspect <containerID or name> | grep IPAddress
+
+what is docker-compose?
+Docker-compose is a tool for linking and running multi-container applications. 
+we create this with the help of yaml file and configure applications with a single command "docker-compose up"
+
+If i exit from a container the data persist or losts in a docker container?
+Any data that your application writes to disk gets preserved in its container 
+until you explicitly delete the container. 
+The file system for the container persists even after the container halts.
+
+what is a docker-swarm cluster?
+A Docker Swarm is a group of either physical or virtual machines that are running the Docker application 
+and that have been configured to join together in a cluster.
+The activities of the cluster are controlled by a swarm manager, and machines that have joined 
+the cluster are referred to as nodes.
+One of the key benefits associated with the operation of a docker swarm is the 
+high level of availability offered for applications.
+Docker Swarm lets you connect containers to multiple hosts similar to Kubernetes.
+
+How do you monitor docker?
+docker stats or docker stats <container-id or name> Display a live stream of container(s) resource usage statistics
+docker top Display the running processes of a container
+Sematext. ...
+Dynatrace. ...
+Datadog. ...
+Prometheus & Grafana. ...
+Elasticsearch & Kibana. ...
+SolarWinds Server & Application Monitor. ...
+AppOptics Docker Monitoring with APM. ...
+cAdvisor.
+
+How do you copy files from container to host?
+sudo docker cp container-id:/path/filename.txt ~/Desktop/filename.txt
+
+What is Docker?
+Docker is a open platform containerization technology, that helps in developing, shipping and deploying applications
+in a distributed manner. it follows the technology of namespaces which isolates the container from the host, 
+which makes container run independently.   
+Docker is written in the Go programming language and 
+takes advantage of several features of the Linux kernel to deliver its functionality.
+
+What is a docker container?
+The docker container is created from docker image and 
+it is a standard unit of software that packaged up with all the dependencies and runs quickly and reliable.
+simply to speak images become containers when they run on docker engine.
+
+What is docker engine?
+docker engine is an open source containerization technology used to build and deploy containerized applications
+it follows the client-server approach that runs server long running daemon process (dockerd)
+Apis that instructs the docker daemon and command line client dockercli. 
+
+What is the command to check running container?
+docker ps
+
+what is an image in docker?
+An image is a combination of binaries and libraries of a software application that helps in creating containers 
+from it. images act as a set of instructions to build a Docker container.
+
+what is the command to login to a running container?
+docker exec -it <container_id> /bin/bash
+
+How do you exit from a container without stopping it?
+can use ctrl-p,q
+
+How do you check container logs?
+sudo docker logs <Containerid>
+
+How do you see running and stopped containers?
+docker ps -a
+
+What is the difference between run and cmd in docker?
+Run is a image build step ina docker file. docker file can have many run steps 
+while cmd is the command where that executes command after by default on container after launching images.
+
+How do you get an image from a running container?
+docker commit <containerid> <image-name>
+
+How to delete docker container and image?
+Docker provides a single command that will clean up any resources — images, containers, volumes, and networks 
+that are not associated with containers - docker system prune 
+this command docker system prune-a  remove any stopped containers and all unused images
+to remove image docker rmi image-name
+to remove all images docker rmi $(docker images -a -q)
+to remove a container docker rm containerID
+to remove all containers docker rm $(docker ps -aq)
+to run and remove a container docker run --rm image name.
+
+Whats the command to run docker file?
+docker build -t <tagname> path/to/dockerfile.
+
+What will you do when a docker container is not responding?
+Docker inspect the container for any errors and Try running docker start command again.
+serach for docker logs <container-id> to know the problem
+
+What is the difference between cmd and entrypoint?
+Entrypoint has the higher priority than cmd.
+cmd - where we give the command that starts the container process
+from ubuntu:latest
+cmd ["echo", "hello"]
+when ever i run the image it gives hello message
+from ubuntu:latest
+entrypoint ["echo"]
+    if i build this image and run it just runs echo and prints nothing and if i pass an argument 
+    after docker run containername hello it prints hello
+it says that if you see an image that entrypoint has command and no argument, user has to pass the argument
+the arguments passed to entrypoints that appends it to the command
+from ubuntu:latest
+entrypoint ["echo"]
+cmd ["hello"]
+if i build this image and run it prints hello, entry point runs first and takes cmd as argument
+here i can override the cmd and pass the argument to cmd dynamically through cli.
+
+How to create docker volumes?
+docker volume create --name [VOLUMEname]
+
+What are bind mounts?
+When you use a bind mount, a file or directory on the host machine is mounted into a container.
+The file or directory is referenced by its absolute path on the host machine. 
+By contrast, when you use a volume, a new directory is created within Docker’s storage directory on 
+the host machine, and Docker manages that directory’s contents.
+
+    
+
+
