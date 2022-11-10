@@ -1,0 +1,104 @@
+Maven 
+maven is a project and dependency management tool.
+maven lifecycle consists of 
+    validate
+    complie
+    test
+    package
+    integration test
+    verify
+    install 
+    deploy.
+
+Maven Commands
+
+mvn clean:
+    This command cleans the maven project by deleting the target directory
+
+mvn compile
+    This command is used to compile java classes of maven project.
+
+mvn compiler:compile
+    This command compiles the java source classes of maven project.
+
+mvn compiler:testCompile
+    This command compiles the test classes of maven project
+
+mvn package
+    This command builds the maven project into jar, war files
+
+mvn install
+    This command builds the maven project and installs the projects files to local repository
+
+mvn deploy
+    This command used to deploy the artifact to the remote repository. 
+    the remote repo should be properly configured with pom.xml file.
+    for the server entry authentication use settings.xml file
+
+mvn validate
+    This command is used to validate maven project so that all necessary info is available.
+
+mvn dependency:tree
+    This command is used to generate the dependency tree of maven project.
+
+mvn dependency:analyze
+    This command is used to analyze unused declared dependencies and used undeclared dependencies. 
+    it is used in reducing the build size by identifying unused dependencies and remove it from the pom.xml file
+
+mvn archetype:generate
+    maven archetypes are mavenproject templating tool kit. 
+    this can be used to generate skeleton of maven project of different types 
+    such as webapplications, jar, maven site execute
+
+mvn site:site
+    This command generates a site to the project. 
+    we will notice a site directory in target dirctory after executing this command.
+    There will be multiple html file available with in the site directory and provides info related to this project
+
+mvn test
+    This command used to run test cases of the project  using maven-surefire-plugin.
+
+mvn verify
+    This command builds the project and runs the test cases and runs the checks on 
+    integration test to ensure quality criteria is met.
+
+mvn -help
+    This command helps with maven usage
+
+mvn -f maven-example-jar/pom.xml package
+    This command is useful when we are buiding a project from different location
+    and providing the pom.xml file location to build the project. 
+    it is useful when you want to run maven project from ascript.
+
+mvn -o package
+    This command is used to build a project offline. It is useful when we have all the dependencies 
+    downloaded in local repository and we dont want maven to look for jars in the remote repo.
+
+mvn -q package
+    This command used to run maven in quiet mode. it only displays testcases resulta and errors.
+
+mvn -X package
+    This command prints the maven version and runs the build in debug mode. 
+    you will see a lot of debug mode in the console.
+
+mvn -v
+    prints maven version
+
+mvn -V package
+    this command prints maven version and continue with the build
+
+mvn -DskipTests package
+    skiptest is the property to skip the unit test cases from build life cycle.
+
+mvn -T 4 package
+     This command tells maven to run parallel builds using specified thread count.
+     Helpful for mutiple module project.
+
+How to install maven on linux?
+    Mave requires jdk to execute
+    install jdk binaries and extract it.
+    setup JAVA_HOME and PATH environment variables
+    check java -version
+    download maven binaries and extract them 
+    setup M2_HOME and PATH enviroment variables
+    verfy maven version by exec command mvn -v 
