@@ -85,7 +85,7 @@ docker commit <containerid> <image-name>
 How to delete docker container and image?
 Docker provides a single command that will clean up any resources — images, containers, volumes, and networks 
 that are not associated with containers - docker system prune 
-this command docker system prune-a  remove any stopped containers and all unused images
+this command docker system prune -a  remove any stopped containers and all unused images
 to remove image docker rmi image-name
 to remove all images docker rmi $(docker images -a -q)
 to remove a container docker rm containerID
