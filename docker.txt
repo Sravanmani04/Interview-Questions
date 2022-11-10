@@ -53,8 +53,11 @@ simply to speak images become containers when they run on docker engine.
 
 What is docker engine?
 docker engine is an open source containerization technology used to build and deploy containerized applications
-it follows the client-server approach that runs server long running daemon process (dockerd)
-Apis that instructs the docker daemon and command line client dockercli. 
+Docker engine is the part of docker that creates and runs containers.
+It consists of docker server, api and cli
+docker server is also known as docker daemon.
+A docker container is a live running instance of docker image 
+ie images becomes containers when run on docker engine
 
 What is the command to check running container?
 docker ps
