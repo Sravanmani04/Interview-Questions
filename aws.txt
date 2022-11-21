@@ -1,85 +1,86 @@
-What is Golden ami?
+1)  What is Golden ami?
+          Overview
+          The golden AMI model provides consistent hardening of Amazon EC2 instances in AWS environments.
+	              
+          Build the golden AMI
+          Validate through a manual or automated process
+          If approved, either
+          Register as active, inspect regularly, and check compliance, or
+          Distribute, consume, and decommission when obsolete
+          If rejected, decommission.
+          
 
-Build a golden AMI pipeline with Tenable.io available in AWS Marketplace
-by Sagar Khasnis | on 30 JAN 2020 | in AWS Config, AWS Marketplace, AWS Service Catalog, AWS Systems Manager, Management Tools, Software, Top Posts | Permalink |  Share
-On December 1, 2019, AWS released EC2 Image Builder, which simplifies the creation, maintenance, validation, sharing, and deployment of Linux or Windows Server images. We now recommend AWS customers use EC2 Image Builder to manage your golden images. You can use the scripts provided in this blog post to create a golden AMI pipeline with Tenable scanning in EC2 Image Builder. Find out more about EC2 Image Builder here, and read this blog post Automate OS image build pipelines with EC2 Image Builder.
-
-Overview
-The golden AMI model provides consistent hardening of Amazon EC2 instances in AWS environments. Our customers love the scalable, standardized, and best practice way of creating Amazon Machine Images (AMI) using a pipeline that conducts continuous vulnerability assessments. This method uses Amazon Inspector or a third-party scanning tool provided by the AWS Partner Network. In this post, we provide a sample implementation for integrating the golden AMI pipeline with the tenable.io vulnerability scanner from Tenable. Tenable is an AWS Security Competency Partner whose products are available in AWS Marketplace. We based the solution in this post on the initial sample implementation created last year. I modified it to make use of Tenable’s product instead of Amazon Inspector.
-
-Tenable’s vulnerability scanning products are available in AWS Marketplace. The golden AMI pipeline sample configuration is available on GitHub via the Amazon Software License. The repository contains a README guide that includes step-by-step instructions and AWS CloudFormation templates. Those templates enable you to set up a golden AMI pipeline that allows you to create, distribute across accounts, regularly assess, and decommission golden AMIs using Tenable.
-
-Architecture
-Golden AMI pipeline workflow
-The golden AMI workflow is as follows:
-
-Build the golden AMI
-Validate through a manual or automated process
-If approved, either
-Register as active, inspect regularly, and check compliance, or
-Distribute, consume, and decommission when obsolete
- If rejected, decommission.
-Please refer to the original golden AMI blog post for additional context around this implementation.
-
-Prerequisites
-Tenable.io must be set up and configured before deploying the golden AMI pipeline. Please refer to the README included with the solution code for details on setting up the Tenable application.
-You must have an AWS account with administrator privileges. Please refer to the AWS document to create an AWS account with an administrator.
-Overview of the golden AMI creation process with Tenable
-An AWS Systems Manager Document defines the automation steps for creating an initial golden AMI. You can invoke the process in three different ways: an Amazon CloudWatch scheduled event, using a Continuous Integration/Continuous Delivery (CI/CD) pipeline, or manually through AWS Systems Manager. Refer to the following diagram.
+          Prerequisites
+          Tenable.io must be set up and configured before deploying the golden AMI pipeline. Please refer to the README included with the solution code for details on setting up the Tenable application.
+          You must have an AWS account with administrator privileges. Please refer to the AWS document to create an AWS account with an administrator.
+          Overview of the golden AMI creation process with Tenable
+          An AWS Systems Manager Document defines the automation steps for creating an initial golden AMI. You can invoke the process in three different ways: an Amazon CloudWatch scheduled event, using a Continuous Integration/Continuous Delivery (CI/CD) pipeline, or manually through AWS Systems Manager. Refer to the following diagram.
 
 
 
-The automation steps for this process fall into three broad categories:
+          The automation steps for this process fall into three broad categories:
 
-Creating a candidate AMI
-An Amazon EC2 instance is launched using a base AMI specified as a parameter.
-Pre-update scripts, patches, and post-update scripts are run on the Amazon EC2 instance.
-An AMI is created from the Amazon EC2 instance, which becomes the golden AMI candidate. Refer to the following diagram to see the outline of this step.
+          Creating a candidate AMI
+          An Amazon EC2 instance is launched using a base AMI specified as a parameter.
+          Pre-update scripts, patches, and post-update scripts are run on the Amazon EC2 instance.
+          An AMI is created from the Amazon EC2 instance, which becomes the golden AMI candidate. Refer to the following diagram to see the outline of this step.
 
-Perform a vulnerability assessment on the candidate AMI using Tenable
-Tags are applied to the candidate AMI to denote it as the candidate AMI.
-An Amazon EC2 instance is launched from the candidate AMI.
-A Tenable vulnerability scan is run on the Amazon EC2 instance from the candidate AMI.
-The Tenable assessment report is sent to the golden AMI approver. Refer to the following diagram to see the outline of this step.
+          Perform a vulnerability assessment on the candidate AMI using Tenable
+          Tags are applied to the candidate AMI to denote it as the candidate AMI.
+          An Amazon EC2 instance is launched from the candidate AMI.
+          A Tenable vulnerability scan is run on the Amazon EC2 instance from the candidate AMI.
+          The Tenable assessment report is sent to the golden AMI approver. Refer to the following diagram to see the outline of this step.
 
-Approval of the new golden AMI
-An SNS notification is sent to the designated golden AMI approver.
-The golden AMI approver reviews the results of the Tenable vulnerability assessment and approves or denies the golden AMI in AWS Systems Manager.
-If the AMI is rejected, a golden AMI is not created. Scripts/patches for the instance can be updated and the process can be run again.
-If the AMI is approved, the candidate AMI ID will be stored in the AWS Systems Manager Parameter Store as the golden AMI ID. Refer to the following diagram to see the outline of this step.
+          Approval of the new golden AMI
+          An SNS notification is sent to the designated golden AMI approver.
+          The golden AMI approver reviews the results of the Tenable vulnerability assessment and approves or denies the golden AMI in AWS Systems Manager.
+          If the AMI is rejected, a golden AMI is not created. Scripts/patches for the instance can be updated and the process can be run again.
+          If the AMI is approved, the candidate AMI ID will be stored in the AWS Systems Manager Parameter Store as the golden AMI ID. Refer to the following diagram to see the outline of this step.
 
 
-Detailed information on this process is available in Steps 5 and 6 of the deployment guide.
-What is NACl?
+          Detailed information on this process is available in Steps 5 and 6 of the deployment guide.
+2)  What is NACl?
 
-NACL - Network Access control list
+     NACL - Network Access control list
 
-     it is a security layer for the vpc-subnets
-     This efficiently manages and controls the traffic that moves around the subnets
-     its an optional layer, but it adds another security layer to aws services.
+          it is a security layer for the vpc-subnets
+          This efficiently manages and controls the traffic that moves around the subnets
+          its an optional layer, but it adds another security layer to aws services.
 
-Components of NACL
-Following are the components of Network Access Control List (NACL): 
+     Components of NACL
+     Following are the components of Network Access Control List (NACL): 
 
-Rule number: Every rule is assigned a unique number. 
-The rule’s priority is also based on the number it is assigned. 
-When it matches to a specific request or traffic, this rule is applied to the request, 
-irrespective of whether another high-numbered rule contradicts it or not.  
-Rules are created with specific increments, 
-like the difference between 2 rules is either 1,10, 100 and all the rules created have this same difference.  
+     Rule number: Every rule is assigned a unique number. 
+     The rule’s priority is also based on the number it is assigned. 
+     When it matches to a specific request or traffic, this rule is applied to the request, 
+     irrespective of whether another high-numbered rule contradicts it or not.  
+     Rules are created with specific increments, 
+     like the difference between 2 rules is either 1,10, 100 and all the rules created have this same difference.  
 
-Type: This tells about the type of traffic, like SSH, HTTP, HTTPS.  
-Protocol: Protocol is a set of rules, that is applied to every request, ex: http, https, ICMP, SSH. 
-Portrange: The listening port, which takes in the request from the user, such as HTTP is associated with port 80.  
-Inboundrules: Also known as source. These rules talk about the source from where the request or traffic is coming from,
-and about the destination port/ the port through which the response is sent.  
-Outboundrules: Also known as destination. These rules talk about where the response should be sent and about the destination port.  
-Allow/Deny: Whether the specific traffic has to be allowed or denied.  
-There are two types of NaCl: 
+     Type: This tells about the type of traffic, like SSH, HTTP, HTTPS.  
+     Protocol: Protocol is a set of rules, that is applied to every request, ex: http, https, ICMP, SSH. 
+     Portrange: The listening port, which takes in the request from the user, such as HTTP is associated with port 80.  
+     Inboundrules: Also known as source. These rules talk about the source from where the request or traffic is coming from,
+     and about the destination port/ the port through which the response is sent.  
+     Outboundrules: Also known as destination. These rules talk about where the response should be sent and about the destination port.  
+     Allow/Deny: Whether the specific traffic has to be allowed or denied.  
+     There are two types of NaCl: 
 
-Customized NACL: It can also be understood as a user-defined NACL,
- and its inherent characteristic is to deny any incoming and outgoing traffic until a rule is added to handle the traffic.  
-Default NACL: This is the opposite of customized NACL, which allows all the traffic to flow in and out of the network. 
-It also comes with a specific rule which is associated with a rule number, and it can’t be modified or deleted. 
-When the request doesn’t match with its associated rule, the access to it is denied. When a rule is added or removed,
-changes are automatically applied to the subnets which are associated with it.  
+     Customized NACL: It can also be understood as a user-defined NACL,
+     and its inherent characteristic is to deny any incoming and outgoing traffic until a rule is added to handle the traffic.  
+     Default NACL: This is the opposite of customized NACL, which allows all the traffic to flow in and out of the network. 
+     It also comes with a specific rule which is associated with a rule number, and it can’t be modified or deleted. 
+     When the request doesn’t match with its associated rule, the access to it is denied. When a rule is added or removed,
+     changes are automatically applied to the subnets which are associated with it.  
+
+3) How do you block ip address in different ways?
+4) How to recover lost keypair?
+5) how many security groups can you create in a vpc?
+     2500
+6) How many security groups can be attached to an ec2 instance?
+     5
+7) How to setup a database in aws?
+     
+8) What is a loadbalancer and round robin method? 
+9) What is target group and listeners in loadbalancer?
+

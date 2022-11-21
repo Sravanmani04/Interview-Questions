@@ -66,3 +66,7 @@ git remote -v to see the url configured
 cat .git/config to see the local-repo cofiguration details
 cat .gitconfig to see the global configurations
 
+What is the difference between centralised version control and distributed version control system?
+
+What are the branching stratigies in git?
+

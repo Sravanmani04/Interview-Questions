@@ -130,5 +130,11 @@ By contrast, when you use a volume, a new directory is created within Docker’s
 the host machine, and Docker manages that directory’s contents.
 
     
+What is an ephemeral container?
+The image defined by your Dockerfile should generate containers that are as ephemeral as possible. By “ephemeral”, 
+we mean that the container can be stopped and destroyed, then rebuilt and replaced with an absolute minimum set up and configuration.
 
+What is multistage build?
+
+Explain Docker Architecture?
 

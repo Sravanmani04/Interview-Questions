@@ -1,0 +1,4 @@
+How to automate three tier structure using terraform?
+How do you provision ec2 instance through terraform?
+what is terraform import?
+

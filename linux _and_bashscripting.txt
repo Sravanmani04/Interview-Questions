@@ -1,0 +1,188 @@
+1) What is the full form of sed?
+        sed - stream line editor
+
+2) How do you read a file in shell or bash?
+
+        method-1
+        using while loop input redirection
+        hello.sh
+        #!/bin/bash
+        while read p    # read is the command and p is variable where we want to save the file lineby line
+        do 
+            echo $p
+        done < hello.sh        # hello.sh is the file you wanted to read
+
+        method-2
+        #!/bin/bash
+        cat hello.sh | while read p    # read is the command and p is variable where we want to save the file lineby line
+        do 
+            echo $p
+        done       # hello.sh is the file you wanted to read
+
+        method 3 
+        using IFS and -r flag
+        #!/bin/bash
+        while IFS= read -r line  # "read" is the command and "line" is variable where we want to save the file lineby line
+        do                       # "IFS" is internal field seperator and  "-r" prevents backslash escaping from interpreter
+            echo $line
+        done < hello.sh          # "hello.sh" is the file you wanted to read
+
+3) system Variables
+    $0 - The name of the bash script
+    $1-$9 - The first 9 arguments of the bash scripts
+    $# - How many arguments were passed to the bash scripts
+    $@ - All the arguments supplied to the bash scripts
+    $? - exit status of the most recent run process
+    $$ - shows the process id of current script
+    $USER - the username of the user running the script
+    $HOSTNAME - The hostname of the machine on which the script is running on.
+    $SECONDS - The number of seconds since the script was started
+    $RANDOM - returns a random number eachtime it is referred to
+    $LINENO Returns the line number of the bashscript
+
+4) To exort the varibles permanently, you can add export command in any of the below files
+        ~/.bashrc
+        ~/.profile
+        /etc/profile
+
+        .bashrc and .profile lives in the users home directory, so that they can be accessible for that user
+        /etc/profile is used to declare the varible globally.
+
+5) operators to learn
+    ! EXPRESSION = The expression is false
+    -n STRING = The length of string is greater than zero
+    -z STRING = The length of string is equal to zero
+    STRING1 = STRING2  = string1is equal to string 2
+    STRING1 != STRING2
+    INTEGER1 -eq INTEGER2 = integer1 is numerically equal to INTEGER2
+    INTEGER1 -gt INTEGER2 = integer1 is numerically greater than INTEGER2
+    INTEGER1 -lt INTEGER2 = integer1 is numerically less than INTEGER2
+    -d FILE ie file existe and its a directory
+    -e FILE ie file exists
+    -s FILE ie file exits and its size is greater than zero ie the file is not empty
+    -r FILE ie file exists and read permissions are granted
+    -w FILE ie file exists and write permissions are granted
+    -x FILE ie file exists and execute permissions are granted.
+    = is slightly different than -eq for example 001 = 1 returns false as = does a string comparison 
+    while -eq does numerical comparison 001 = 1 returns true
+    Use && to execute one command only when the previous one succeeds.
+    Use || to execute one command only when the previous one fails.
+    Use ; to join two commands when you want the second to execute no matter the result of the first one.
+    Use & to run the first job in the background while the next executes.
+
+    
+6)  What is signal, trap and kill in bash scripting ?
+	Signals: signals are the messages sent to the process. after receiving this signal process exhibits a particular behaviour.
+	To kill a process use "SIGKILL"
+	TO Terminate A process "SIGTERM"
+	to interrupt the process "SIGINT" 
+	If we want to terminate a process and wanted to list all the signals we can see them under kill -l
+	trap command is used to define what action to be performed  when a particular signal is sent to our shell script.
+	when ever you give sigkill and sigstop to trap, trap cannot catch. other than these two trap can catch others.
+
+7)  How do you create backup of a database?
+	
+8)  How do you schedule a backup ?
+
+9)  How to see parent processid?
+	ps -ef
+10) What is the difference between useradd and adduser?
+ useradd is for rhel based and adduser is debian based. 
+11) How can you see which kernal version a system is currently running?
+ 	uname -a for all
+	uname -v for version 
+	uname -r for releases
+12) How can you check a systems current ip address?
+	ifconfig - ubuntu
+	ip addr show 
+	ip addr show eth0
+13) How do you check for free disk space?
+	df -ah
+14) How do you manage services on a system?
+	for older systems 
+	service <servicename> status
+	service <servicename> start
+	For newer systems
+	systemctl status servicename
+	systemctl start servicename
+	systemctl enable servicename
+	systemctl reload servicename
+15) How do you check the size of a directorys content on disk?
+	du -sh code # du is the disk use
+16) How would you check for open ports on a linux machine?
+	netstat -tulpn #doesnt show pid/program if you are a normal user and be root user to see everything
+17) How do you check cpu usage of a given process?
+	ps aux | grep <processname>
+	top
+	htop
+18) Dealing with mounts?
+	to mount a device 
+      check mounts - ls /mnt
+	mount device - mount /dev/sda2 /mnt # mount=command, device=/dev/sda2, /mnt=mount point on system
+	to see list of mounts run - mount
+19) How do you look up something you dont know?
+	man <ps>
+20) What do you do when you cant find an answer on a manpage?
+	ask google, stackoverflow. 
+21) To list the hardware use 
+	lshw 
+	lshw -C network to see the manufacturer of your network adapter.
+22) How do you create zip file or folders in linux?
+23) What is the umask value of root?
+        777
+24) what is umask?
+    umask - user file creation mode mask
+    is a four digit octal number that defines the file permissions for newly created files.
+    Every process has its own umask, inherited from its parent process.
+    
+25) What is swap memory?
+    For every operating system, there is a dedicated amount of RAM available that makes 
+    the processing of a program possible. However, the amount of this RAM is limited which is why RAM cannot hold 
+    a bulk of data in it. Therefore, there should be a backup option available which can support RAM 
+    whenever it runs out of memory.
+    This concept holds for the Windows operating system as well as for Linux.
+     In Windows OS, whenever RAM has an insufficient amount of memory to hold a process, 
+     it borrows some amount of memory from the secondary storage. 
+     This borrowed memory is known as Virtual Memory. 
+     Similarly, whenever RAM runs out of memory in Linux, 
+     it borrows some memory from the secondary storage to store its inactive content.
+    In this way, the RAM finds sufficient space to hold a new process within it. 
+    Here, the borrowed space from the hard disk is called Swap Memory.
+    swap memory is the dedicated amount of hard drive that is used whenever RAM runs out of memory. 
+    There is a memory management program in Linux that takes care of this process. 
+    Whenever RAM is short of memory, the memory management program looks for all those inactive blocks of data 
+    present in RAM that have not been used for a long time.
+    When it successfully finds those blocks, it shifts them into the swap memory.
+    In this way, the space of RAM is freed up and hence it can be utilized for some other programs 
+    that need processing on an urgent basis. 
+    Types of Swap Memory:
+    Swap Partition- This is the default type of swap memory which is in fact, 
+    a hard drive partition that is dedicated to swapping.
+    Swap File- This is a self-created type of swap memory. Whenever there is no sufficient amount of space left in the hard drive to create a swap partition, 
+    a swap file is manually created for swapping the inactive contents of RAM into it.
+
+26)What is the differnce between && and & in bash scripting ?
+        Use && to execute one command only when the previous one succeeds.
+        Use & to run the first job in the background while the next executes.
+
+
+27) path to your bash shell
+    which bash
+
+28) awk
+    to select fields or columns in a text, lets say i want $2 and $3 ie second and third fielts in a text then 
+    echo one two three four | awk '{print $2,$3}'
+
+ how can i delete duplicate lines in afile?
+    awk '!x[$0]++' <file>
+To see the deleted duplicate lines
+    awk 'x[$0]++' <file>
+
+to show lines in a file that starts with line st using awk is 
+awk '/^st/' <file/to/path>
+
+awk -F: '{print $1}' <file/to/path> | head -4  # -F is field seperator {print $1} prints first field 
+awk -F: '$3 > 1000' /etc/group it shows groupids greater than 1000
+
+awk '!/:$/' /etc/groups     /:$/ - lines that end with colon(:)  !/:$/ - lines that doesnt end with colon.
+in /etc/groups lines end with : doesnt have members and lines that doesnt have : at end is having members

@@ -1,0 +1,161 @@
+What is distroless image?
+	"Distroless" images contain only your application and its runtime dependencies. 
+    They do not contain package managers, shells or any other programs you would expect to 
+	find in a standard Linux distribution. 
+
+What is an ephemeral containers?
+ 	The ephemeral containers are the special type of containers that exists with kubernetes core api.
+      This epheramral containers are added to pod to perform debugging. 
+	  it runs untils it exits and wont be restarted.
+      it runs with pods existing resource allocation and share common container namespaces.
+
+What is an init container?
+	An pod can have one or more init containers, which are run before application containers get started.
+	they are like regular containers but they always run to completion. 
+	each init container must complete successfully before the next one starts. 
+	if a pods init container fails kubelet repeatedly start until it successfully completes.
+	and if the pods restart policy is set to never, the overall pod is gets failed.
+
+Give a use case for init container?
+	a process that pulls a code or binary from a repository that will be used by the main web application.
+	That is a task that will be run only one time when the pod is first created. 
+	Or a process that waits for an external service or database to be up before the actual application starts. 
+	That's where initContainers comes in.
+How do you access a service in onenamspace  that access another namespace?
+Specify namespace selector field and matchlabelsand provide matchlabels.
+
+Explain multi-container pods?
+	multicontainer pods are 
+	ambassador
+	adapter
+	sidecar: 
+What is a role in kubernetes?
+RBAC - Role based access controls. An RBAC Role contains rules that represent a set of permissions.
+A Role always sets permissions within a particular namespace; when you create a Role, you have to specify the namespace it belongs in.
+example:
+developer-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+	name:developer
+	namespace: default
+rules:
+  - apiGroups: [""] 	# "" indicates the core API group
+    resources: ["pods"]
+    verbs: ["list", "get", "create", "update", "delete"]
+
+  - apiGroups: [""]
+    resources: ["configMap"]
+    verbs: ["list", "get", "create", "update", "delete"]
+kubectl create -f developer-role.yaml
+
+What is a role binding in kubernetes?
+A role binding grants the permissions defined in a role to a user or set of users. 
+It holds a list of subjects (users, groups, or service accounts), and a reference to the role being granted. 
+A RoleBinding grants permissions within a specific namespace.
+developer-rolebinding.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+	name:devuser-developer-rolebinding
+subjects:
+   - kind:user
+     name: dev-user
+     apiGroup: rbac.authorization.k8s.io
+roleRef:
+     kind:Role
+     name: developer
+     apiGroup: rbac.authorization.k8s.io
+kubectl create -f create developer-rolebinding.yaml
+
+What is a cluster role ?
+ClusterRoles have several uses. You can use a ClusterRole to:
+define permissions on namespaced resources and be granted access within individual namespace(s)
+define permissions on namespaced resources and be granted access across all namespaces
+define permissions on cluster-scoped resources
+Example:
+clusterrole.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+	name:developer
+rules:
+  - apiGroups: [""] 	# "" indicates the core API group
+    resources: ["pods"]
+    verbs: ["list", "get", "create", "update", "delete"]
+
+  - apiGroups: [""]
+    resources: ["configMap"]
+    verbs: ["list", "get", "create", "update", "delete"]
+kubectl create -f clusterrole.yaml
+
+What is a cluster role binding?
+A ClusterRoleBinding grants that access cluster-wide. grants permissions for user or set of users. 
+
+example
+clusterrolebinding.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+	name:devuser-developer-clusterrolebinding
+subjects:
+   - kind: Group
+     name: manager
+     apiGroup: rbac.authorization.k8s.io
+roleRef:
+     kind:ClusterRole
+     name: developer
+     apiGroup: rbac.authorization.k8s.io
+
+What is a configmap?
+
+
+
+Kubectl config view # shows the configuration settings
+controlplane ~ ➜  kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://controlplane:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kubernetes-admin
+  name: kubernetes-admin@kubernetes
+current-context: kubernetes-admin@kubernetes
+kind: Config
+preferences: {}
+users:
+- name: kubernetes-admin
+  user:
+    client-certificate-data: REDACTED
+    client-key-data: REDACTED
+
+
+
+To see list of contexts - kubectl config get-contexts
+
+controlplane ~ ➜  kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   
+
+To see current context - kubectl config current-context
+controlplane ~ ✖ kubectl config current-context
+kubernetes-admin@kubernetes
+
+To set the default cluster to my-cluster-names - kubectl config use-context my-cluster-names
+controlplane ~ ➜  kubectl config use-context kubernetes-admin@kubernetes
+Switched to context "kubernetes-admin@kubernetes".
+
+To set a cluster entry in kubeconfig - kubectl config set-cluster my-cluster name
+kubectl config view -o jsonpath='{.users[].name}'    # display the first user
+kubectl config view -o jsonpath='{.users[*].name}'   # get a list of users
+kubectl config unset users.foo                       # delete user foo
+# permanently save the namespace for all subsequent kubectl commands in that context.
+kubectl config set-context --current --namespace=ggckad-s2
+

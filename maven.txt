@@ -1,5 +1,5 @@
 Maven 
-maven is a project and dependency management tool.
+maven is a project management and dependency management tool.
 maven lifecycle consists of 
     validate
     complie
@@ -22,7 +22,7 @@ mvn compiler:compile
     This command compiles the java source classes of maven project.
 
 mvn compiler:testCompile
-    This command compiles the test classes of maven project
+    This command compiles the java test classes of maven project
 
 mvn package
     This command builds the maven project into jar, war files
@@ -39,7 +39,7 @@ mvn validate
     This command is used to validate maven project so that all necessary info is available.
 
 mvn dependency:tree
-    This command is used to generate the dependency tree of maven project.
+    This command is used to generate the tree of dependencies required for a maven project.
 
 mvn dependency:analyze
     This command is used to analyze unused declared dependencies and used undeclared dependencies. 
@@ -75,7 +75,7 @@ mvn -o package
     downloaded in local repository and we dont want maven to look for jars in the remote repo.
 
 mvn -q package
-    This command used to run maven in quiet mode. it only displays testcases resulta and errors.
+    This command used to run maven in quiet mode. it only displays testcases results and errors.
 
 mvn -X package
     This command prints the maven version and runs the build in debug mode. 
@@ -102,3 +102,9 @@ How to install maven on linux?
     download maven binaries and extract them 
     setup M2_HOME and PATH enviroment variables
     verfy maven version by exec command mvn -v 
+
+Using maven tool how do you deploy an application?
+    mvn deploy
+    This command used to deploy the artifact to the remote repository. 
+    the remote repo should be properly configured with pom.xml file.
+    for the server entry authentication use settings.xml file

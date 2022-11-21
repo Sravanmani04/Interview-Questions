@@ -1,0 +1,17 @@
+What is master slave configuration in jenkins?
+What are all the plugins youhave used in jenkins?
+ssh - Used for connecting remote servers from jenkins.
+pipeline - which lets us to orchestrate pipelines from simple to complex works.
+Rolebasedauthorizationstrategy-
+Publishoverssh
+mail
+ansible
+github Integration
+maven Integration
+sonarscanner
+nexus artifact uploader
+docker plugins
+docker pipeline
+ansicolor
+ 
+                                    

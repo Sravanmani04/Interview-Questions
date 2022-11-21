@@ -3,7 +3,144 @@ A)  The shell is user interface to access the services of an operating system wh
 command line interface is a computer program that processes commands in the form of line of text. 
 The user typically interacts with shell via command line interface
 
-What is host-key-ckecking?
+What is host-key-checking?
 Checking host keys guards against server spoofing and man in the middle attacks. 
 when ever the host reinstalls and has a different keys in Known_hosts then error occurs until it get corrected.
+
+What is Ansible role?
+Ansible roles allow you to develop reusable automation components by grouping and encapsulating related 
+artifacts, like configuration files, templates, tasks, and handlers.
+To get the role ansible-galaxy init <rolename>
+the above command creates the role.
+for example ltes say we created a role with rolename post install it creates the following
+
+post install
+    Readme.md
+    defaults
+        main.yaml
+    files
+    handlers
+        main.yaml
+    meta
+        main.yaml
+    tasks
+        main.yaml
+    templates
+    tests
+        inventory
+        test.yaml
+    vars
+        main.yaml
+
+What are handlers in ansible?
+Handlers are the tasks that they run only when notified.    
+Sometimes you want a task to run only when a change is made on a machine. 
+For example, you may want to restart a service if a task updates the configuration of that service, 
+but not if the configuration is unchanged. Ansible uses handlers to address this use case. 
+Handlers are tasks that only run when notified.
+
+What are the modules used in ansible?
+copy
+file
+fetch
+debug
+
+Order of ansible configuration
+    ANSIBLE_CONFIG(if environment variable is set by exporting and defining path) - 1st priority
+    ansible.cfg (in current working directory) - 2nd priority
+    ~/.ansible.cfg(in the home directory) - 3rd priority
+    /etc/ansible/hosts (global) - last priority
+    if we are using ansible > 2.12 we should generate a configuration file by using command
+    $  ansible-config init --disabled > ansible.cfg
+
+
+Ansible folder structure?
+production                # inventory file for production servers
+staging                   # inventory file for staging environment
+
+group_vars/
+   group1.yml             # here we assign variables to particular groups
+   group2.yml
+host_vars/
+   hostname1.yml          # here we assign variables to particular systems
+   hostname2.yml
+
+library/                  # if any custom modules, put them here (optional)
+module_utils/             # if any custom module_utils to support modules, put them here (optional)
+filter_plugins/           # if any custom filter plugins, put them here (optional)
+
+site.yml                  # master playbook
+webservers.yml            # playbook for webserver tier
+dbservers.yml             # playbook for dbserver tier
+
+roles/
+    common/               # this hierarchy represents a "role"
+        tasks/            #
+            main.yml      #  <-- tasks file can include smaller files if warranted
+        handlers/         #
+            main.yml      #  <-- handlers file
+        templates/        #  <-- files for use with the template resource
+            ntp.conf.j2   #  <------- templates end in .j2
+        files/            #
+            bar.txt       #  <-- files for use with the copy resource
+            foo.sh        #  <-- script files for use with the script resource
+        vars/             #
+            main.yml      #  <-- variables associated with this role
+        defaults/         #
+            main.yml      #  <-- default lower priority variables for this role
+        meta/             #
+            main.yml      #  <-- role dependencies
+        library/          # roles can also include custom modules
+        module_utils/     # roles can also include custom module_utils
+        lookup_plugins/   # or other types of plugins, like lookup in this case
+
+    webtier/              # same kind of structure as "common" was above, done for the webtier role
+    monitoring/           # ""
+    fooapp/               # ""
+Alternative directory:
+    inventories/
+   production/
+      hosts               # inventory file for production servers
+      group_vars/
+         group1.yml       # here we assign variables to particular groups
+         group2.yml
+      host_vars/
+         hostname1.yml    # here we assign variables to particular systems
+         hostname2.yml
+
+   staging/
+      hosts               # inventory file for staging environment
+      group_vars/
+         group1.yml       # here we assign variables to particular groups
+         group2.yml
+      host_vars/
+         stagehost1.yml   # here we assign variables to particular systems
+         stagehost2.yml
+
+library/
+module_utils/
+filter_plugins/
+
+site.yml
+webservers.yml
+dbservers.yml
+
+roles/
+    common/
+    webtier/
+    monitoring/
+    fooapp/
+
+
+what is Ansible inventory?
+The Ansible inventory file defines the hosts and groups of hosts upon 
+which commands, modules, and tasks in a playbook operate. The common format of ansible inventory is yaml.
+ The default location for the inventory file is /etc/ansible/hosts.
+ sample ansible inventory file
+ [all:vars]
+
+ ansible_connection = ssh
+
+ [test]    # group
+ test1  ansible_host=remote_host ansible_user=remote_user ansible_private_key_file=/path/to/file
 
