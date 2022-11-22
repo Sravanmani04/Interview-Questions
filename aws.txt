@@ -23,13 +23,15 @@
           Creating a candidate AMI
           An Amazon EC2 instance is launched using a base AMI specified as a parameter.
           Pre-update scripts, patches, and post-update scripts are run on the Amazon EC2 instance.
-          An AMI is created from the Amazon EC2 instance, which becomes the golden AMI candidate. Refer to the following diagram to see the outline of this step.
+          An AMI is created from the Amazon EC2 instance, which becomes the golden AMI candidate. 
+          Refer to the following diagram to see the outline of this step.
 
           Perform a vulnerability assessment on the candidate AMI using Tenable
           Tags are applied to the candidate AMI to denote it as the candidate AMI.
           An Amazon EC2 instance is launched from the candidate AMI.
           A Tenable vulnerability scan is run on the Amazon EC2 instance from the candidate AMI.
-          The Tenable assessment report is sent to the golden AMI approver. Refer to the following diagram to see the outline of this step.
+          The Tenable assessment report is sent to the golden AMI approver. 
+          Refer to the following diagram to see the outline of this step.
 
           Approval of the new golden AMI
           An SNS notification is sent to the designated golden AMI approver.
@@ -83,4 +85,11 @@
      
 8) What is a loadbalancer and round robin method? 
 9) What is target group and listeners in loadbalancer?
+10) what is s3 life cycle?
 
+11) what is vpc transit gateway?
+12) I have a file in s3 and i want to put it in dynamo db. how can i do that?
+13) How many elastic ip can an account have?
+     an account can have 5 elastic ips and we ask aws to increase that.
+
+14)

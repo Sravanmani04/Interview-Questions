@@ -70,3 +70,5 @@ What is the difference between centralised version control and distributed versi
 
 What are the branching stratigies in git?
 
+What is the difference between git reset and git revert?
+

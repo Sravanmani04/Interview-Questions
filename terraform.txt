@@ -2,3 +2,285 @@ How to automate three tier structure using terraform?
 How do you provision ec2 instance through terraform?
 what is terraform import?
 
+ Terraform Core Commands
+        # Initialize Terraform
+        terraform init:
+            initializes a working directory and downloads providers plugins.
+            initailises backend
+            initialises provider plugins and downloads it.
+            it also creates .terraform.lock.hcl and .terraform folders.
+            .terraform.lock.hcl - this folder records the provider selection.
+            .terraform - this folder ha sthe provider details. it's structure will look like this
+            .terraform>providers>registry.terraform.io>hashicorp>aws><version number>>darwin_amd64
+
+
+        # Terraform Validate
+        terraform validate:
+            validates configuration files in the respective directory and 
+            ensure that they are syntactically valid and internally consistent
+
+        # Terraform Plan to Verify what it is going to create / update / destroy
+        terraform plan:
+        Creates an execution plan. it determines and shows
+        what actions to be necessary to achieve desired state from config files written.
+        
+        # Terraform Apply to Create EC2 Instance
+        terraform apply :
+        this command helps in achieveing desired state.
+
+        terraform destroy:
+        this destroys the complete infra created.
+         
+Code in terraform language is stored with .tf file extension.   
+we call them terraform configuration files or terraform manifest files.
+To execute commands in terraform we should be present in terraform working directory 
+where the config files are present 
+ 
+                                         Terraform 
+    Blocks                      Arguments              Identifiers          comments
+Terraform consists of :
+        Blocks
+        Arguments
+        Identofiers
+        Comments
+
+Understand Terraform Language Basics
+        Understand Blocks:
+            Example: 
+                        Terraform Configuration Language Syntax:
+                        # Template
+                        <BLOCK TYPE> "<BLOCK LABEL>" "<BLOCK LABEL>"   {
+                        # Block body
+                        <IDENTIFIER> = <EXPRESSION> # Argument
+                        }
+
+                        # AWS Example
+                                (block label)
+            block type->resource "aws_instance" "ec2demo" { # BLOCK
+                        ami           = "ami-04d29b6f966df1537" # Argument
+                        instance_type = var.instance_type # Argument with value as expression (Variable value replaced from varibales.tf
+                        }
+                    in the above code left side ami and instance type are called as argument name or Identifiers
+                    and left side code is called as argument value or expression.
+            Top level blocks are resources, providers
+            block inside block: provisioners, resource specific blocks like tags etc
+
+
+        Understand Arguments, Attributes & Meta-Arguments:
+            Arguments: arguments configure a particular resource. Many arguments are resource specific.
+                        Arguments can be required or optional. 
+                        terraform throws error if a required argument is missing
+            Attributes: atributes are values exposed by a particular resource.
+                        reference to resource attributes can be taken in the form of 
+                                resource_type.resource_name.attribute_name
+                        resource attributes are often provided by the underlying cloud provider or api.
+            Meta-arguments:
+                        depends_on
+                        count
+                        for_each
+                        lifecycle
+                        provider
+                    the above meta-arguments changes the behaviour of resources 
+                    and in what fashion they should be created.
+
+
+        Understand Identifiers:
+        
+        Understand Comments:
+            In terraform single line comments are done with the help of # or // and 
+            multi comments are done with /* comment */
+
+Understand about Terraform Top-Level Blocks
+        Discuss about Terraform Top-Level blocks:
+        Terraform top level blocks: 
+            Terraform uses a limited number of top level blocks.
+            These blocks can appear outside of anyother block in a .tf config file.
+            most of the terraform features are implemented as top-level blocks.
+                Fundamental blocks:
+                    Terraform block
+                    providers block 
+                    resource block 
+                variables block:
+                    Input variables block
+                    output values block
+                    local values block
+                calling or referencing block:
+                    Data sources block
+                    Modules block
+Top level Blocks with examples:
+                Terraform Settings Block or terraform block:
+                    This block is used to configure some behaviours
+                    Here we define required terraform version
+                    list providers required
+                    terraform backend and state locking.
+                    Example:
+                    #####################################################################
+                    # Block-1: Terraform Settings Block
+                    terraform {
+                    required_version = "~> 0.14"
+                    required_providers {
+                        aws = {
+                        source  = "hashicorp/aws"
+                        version = "~> 3.0"
+                        }
+                    }
+                    # Adding Backend as S3 for Remote State Storage with State Locking
+                    backend "s3" {
+                        bucket = "terraform-stacksimplify"
+                        key    = "dev2/terraform.tfstate"
+                        region = "us-east-1"  
+
+                        # For State Locking
+                        dynamodb_table = "terraform-dev-state-table"
+                    }
+                    }
+                    #####################################################################
+
+                Provider Block:
+                    Defined as heart of terraform
+                    terraform relies on providers to interact with remote systems.
+                    here we declare providers to install and use them.
+                    provider configurations belong to root module.
+                    example: 
+                #####################################################################
+                # Block-2: Provider Block
+                provider "aws" {
+                profile = "default" # AWS Credentials Profile configured on your local desktop terminal  $HOME/.aws/credentials
+                region  = "us-east-1"
+                }
+                #####################################################################
+                
+                Resource Block:
+                    Each resource block describes one or more infrastructure objects.
+                    resource syntax
+                    how terraform handles resource declarations.
+                    provisioners we can configure resourcepost creation actions.
+                #####################################################################
+                # Block-3: Resource Block
+                resource "aws_instance" "ec2demo" {
+                ami           = "ami-04d29b6f966df1537" # Amazon Linux
+                instance_type = var.instance_type
+                }
+                #####################################################################
+                
+                Input Variables Block:
+                    Input variables serve as a parameter for terraform module.
+                    Aspects of the module can be customized without making changes to the 
+                        terraform module source code
+                    modules can be shared between different configurations.
+                    we have 10 different types of passing variables to source code
+                        1. input variables - Basic
+                        2. provide input variables when prompted during terraform plan or apply.
+                        3. override default variable values using cli argument (-var)
+                        4. override default variable values using  Environment Variables(TF_var_aa)
+                        5. Provide input variables using terraform.tfvars files
+                        6. provide input variables using <anyname>.tfvars with cli argument -var-file
+                        7. Provide input variables using auto.tfvars file
+                        8. Implement complex type constructors like list and maps using input variables 
+                        9. Implement custom validation rules in input variables
+                        10. Protect sensitive input variables.
+
+                    For reference to have 10 different types of passing variables to source code see here: 
+                    https://github.com/stacksimplify/hashicorp-certified-terraform-associate/tree/main/05-Terraform-Variables
+                Example:
+                #####################################################################
+                # Block-4: Input Variables Block
+                variable "instance_type" {
+                default = "t2.micro"
+                description = "EC2 Instance Type"
+                type = string
+                }
+                #####################################################################
+                
+                Output Values Block:
+                    output values are like return values of a terraform module.
+                    1. A root module can use the output to print certain values in the output after running terraform apply.
+                    2. A child module can use the output to expose a subset of its resource attribute to a parent module.
+                    3. when using remote state, root module output can be accessed by other configurations via terraform_remote_state_data_source
+                    reference for the above line 3:
+                    https://github.com/stacksimplify/terraform-on-aws-ec2/blob/main/21-terraform-remote-state-datasource/project-1-aws-vpc/c4-02-vpc-module.tf
+                #####################################################################
+                # Block-5: Output Values Block
+                output "ec2_instance_publicip" {
+                description = "EC2 Instance Public IP"
+                value = aws_instance.my-ec2-vm.public_ip
+                }
+                #####################################################################
+                
+                Local Values Block:
+                #####################################################################
+                # Block-6: Local Values Block
+                # Create S3 Bucket - with Input Variables & Local Values
+                locals {
+                bucket-name-prefix = "${var.app_name}-${var.environment_name}"
+                }
+                #####################################################################
+                
+                Data Sources Block:
+                #####################################################################
+                # Block-7: Data sources Block
+                # Get latest AMI ID for Amazon Linux2 OS
+                data "aws_ami" "amzlinux" {
+                most_recent      = true
+                owners           = ["amazon"]
+
+                filter {
+                    name   = "name"
+                    values = ["amzn2-ami-hvm-*"]
+                }
+
+                filter {
+                    name   = "root-device-type"
+                    values = ["ebs"]
+                }
+
+                filter {
+                    name   = "virtualization-type"
+                    values = ["hvm"]
+                }
+
+                filter {
+                    name   = "architecture"
+                    values = ["x86_64"]
+                }
+
+                }
+                #####################################################################
+                
+                Modules Block:
+                #####################################################################
+                # Block-8: Modules Block
+                # AWS EC2 Instance Module
+
+                module "ec2_cluster" {
+                source                 = "terraform-aws-modules/ec2-instance/aws"
+                version                = "~> 2.0"
+
+                name                   = "my-modules-demo"
+                instance_count         = 2
+
+                ami                    = data.aws_ami.amzlinux.id
+                instance_type          = "t2.micro"
+                key_name               = "terraform-key"
+                monitoring             = true
+                vpc_security_group_ids = ["sg-08b25c5a5bf489ffa"]  # Get Default VPC Security Group ID and replace
+                subnet_id              = "subnet-4ee95470" # Get one public subnet id from default vpc and replace
+                user_data               = file("apache-install.sh")
+
+                tags = {
+                    Terraform   = "true"
+                    Environment = "dev"
+                }
+                }
+                #####################################################################
+
+        
+
+Prerequisites for terraform manifest for ec2
+        Pre-Conditions-1: Ensure you have default-vpc in that respective region
+        Pre-Conditions-2: Ensure AMI you are provisioning exists in that region if not update AMI ID
+        Pre-Conditions-3: Verify your AWS Credentials in $HOME/.aws/credentials
+
+What is for_each? or how to create 5 different instances in terraform?
+
+
