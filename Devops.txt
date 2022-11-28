@@ -1,0 +1,36 @@
+To know about ci and cd more watch below video link:
+https://www.youtube.com/watch?v=tBlj1J11f88
+
+source  >  build  > test  > prod
+
+Source: This is the point where you check in source code.
+
+Build: Compile code, unit test, create artifacts
+
+Test: integration test with other systems,load testing, ui test, penerate testing
+
+Prod: Deployment to production environment.
+
+Source and build stages are combinedly termed as continuous integration
+
+continuous delivery is the whole ci and artifact tested in test 
+and there is a manual intervention to move code into prod.
+
+Continuous Deployment: is the process where no human intervention needed and code gets deployed automatically.
+
+
+
+
+
+Sample python code:
+
+from flask import flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello-World!"
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")

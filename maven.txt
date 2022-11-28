@@ -108,3 +108,12 @@ Using maven tool how do you deploy an application?
     This command used to deploy the artifact to the remote repository. 
     the remote repo should be properly configured with pom.xml file.
     for the server entry authentication use settings.xml file
+
+What is pom.xml file?
+n XML file that contains information about the project 
+and configuration details used by Maven to build the project.
+
+What does pom.xml file contain?
+The pom. xml file contains information of project and configuration information for the maven to build the project
+ such as dependencies, build directory, source directory, test source directory, plugin, goals etc. 
+ Maven reads the pom. xml file, then executes the goal.

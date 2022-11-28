@@ -282,5 +282,8 @@ Prerequisites for terraform manifest for ec2
         Pre-Conditions-3: Verify your AWS Credentials in $HOME/.aws/credentials
 
 What is for_each? or how to create 5 different instances in terraform?
+for_each = toset(["one", "two", "three", "four", "five"])
+
+  name = "instance-${each.key}"
 
 

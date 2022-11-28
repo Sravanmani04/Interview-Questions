@@ -82,14 +82,89 @@
 6) How many security groups can be attached to an ec2 instance?
      5
 7) How to setup a database in aws?
-     
-8) What is a loadbalancer and round robin method? 
-9) What is target group and listeners in loadbalancer?
-10) what is s3 life cycle?
+     amazon RDS: it is a managed relational database service managed by aws.
+     It has the amazon aurora with mysql and postgresql compatibility, mysql, mariadb, postgresql, oracle and sql server.
+     i created mysqldatabase
+     Asks for standard create or easy create
+     engineoptions - mysql
+     select version of mysql
+     templates- production, dev/test, freetier
+     multi AZ db cluster - creates a db cluster with primary instance and two standby instance where each db instance is placed in different availability zone
+                              provides high availability, serves workloads
+     multi AZ db instance - creates a db cluster with primary instance and one standby instance where each db instance is placed in different availability zone
+                              provides high availability, standby instance doesnt support workloads.
+     single db instance - creates single db instance with no stand by instance.
 
+     credential settings- where we provide credentials
+     
+     instance configurations:
+               Standard classes (includes m classes)
+          Memory optimized classes (includes r and x classes)
+          Burstable classes (includes t classes)
+     storage:i01, gp2,gp3
+     storage autoscaling with a threshold
+     network connectivity with vpc and subnets
+     database authentication
+     password authentication
+     password and iam database authentication
+     retention period
+     backup window
+     log exports
+     deletion protection
+     under actions we can see  
+               stop temporaryly
+               reboot
+               delete
+               setup ec2 connection
+               create read replica
+               create aurora read replica
+               promote
+               convert to multiaz deployment
+               take snapshot
+               restore to point in time
+               migrate snapshot
+8) What is a loadbalancer and round robin method? 
+     Load balancing refers to efficiently distributing incoming network traffic across a group of backend servers.
+     Round robin method: A simple method for load balancing servers.
+                         multiple identical servers are configured with same services, same domain name but with unique ip for server
+                         A Dns server has the list of all server ip that are associated with the same domain name. 
+                         when the request for the ip address associated with internet domain name are received, 
+                         the addresses are returned in a rotating sequential manner.
+9) What is target group and listeners in loadbalancer?
+     Target group can be a set of ec2 instances, ipaddress, lambda function or application load balancer
+      to where the traffic is routed to with protocol of http or https types with ports to be opened to internet.
+      A listener is process that checks for connection requests.
+      It is configured with a protocol and a port for front-end (client to load balancer) connections, 
+      and a protocol and a port for back-end (load balancer to back-end instance) connections. 
+10) what is s3 life cycle?
+          s3 has different storage classes. they are
+                              s3 standard general purpose
+                                   • 99.99% Availability
+                                   • Used for frequently accessed data
+                                   • Low latency and high throughput
+                                   • Sustain 2 concurrent facility failures
+                                   • Use Cases: Big Data analytics, mobile & gaming applications, content
+                                   distribution…
+                              s3 standard infrequent access:
+                                   • 99.9% Availability
+                                   • Use cases: Disaster Recovery, backups
+                                   For data that is less frequently accessed, but requires rapid access when needed
+                                   Lower cost than S3 Standard
+                              s3 one-zone infrequent access
+                              s3 glacier instant retrival
+                              s3 glacier flexible retrival
+                              s3 glacier deep archive
+                              s3 intelligent tiering.
+          we can trasition the objects between storage classes.
+          if there is a object that infrequently accessed then it is transferred to standard IA.
+          for archiving you need glacier or deep archive.
+          these objects can be automated with lifecycle rules.
+          s3> management> lifecycle>addlifecycle rule>rule name,rule scope,> storage class transition , current versionor previous version>expiration> summary
 11) what is vpc transit gateway?
-12) I have a file in s3 and i want to put it in dynamo db. how can i do that?
+     
+
+12) I have a file in s3 and i want to put it in dynamo db using lambda. how can i do that?
 13) How many elastic ip can an account have?
      an account can have 5 elastic ips and we ask aws to increase that.
 
-14)
+14) 

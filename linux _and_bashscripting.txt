@@ -1,5 +1,160 @@
 1) What is the full form of sed?
-        sed - stream line editor
+        sed - stream editor
+        it performs text transformation on streams like:
+            substitute some text for other text.
+            remove lines
+            append text after given lines
+            insert text before certain lines.
+            sed is used programatically not interactively.
+            to invoke sed use command  type -a sed
+                sravan@BOGIREDDY:~$ type -a sed
+                sed is /usr/bin/sed
+                sed is /bin/sed
+    1- replacement of string:
+        sravan@BOGIREDDY:~$ echo "Dwight is assistant regional manager" > manager.txt
+        sravan@BOGIREDDY:~$ cat manager.txt
+        Dwight is assistant regional manager
+        sravan@BOGIREDDY:~$ sed 's/assistant/assistant to the/' manager.txt
+        Dwight is assistant to the regional manager
+    But here the original file manager.txt is unaltered
+        sravan@BOGIREDDY:~$ cat manager.txt
+        Dwight is assistant regional 
+        
+    2- find and replace string 
+            sravan@BOGIREDDY:~$ echo "i love my wife" > love.txt
+            sravan@BOGIREDDY:~$ cat love.txt
+            i love my wife
+            sravan@BOGIREDDY:~$ sed 's/my wife/sed/' love.txt
+            i love sed
+    3- case characters with sed:
+        if sed doesnt know the characters we passed it then doesnt change anything
+            sravan@BOGIREDDY:~$ sed 's/MY WIFE/sed/' love.txt
+            i love my wife
+        for flags to pass the syntax is sed 's/search-pattern/replacement-strings/flags' <filename>
+        we can pass a flag to ignore case 
+            sravan@BOGIREDDY:~$ sed 's/MY WIFE/sed/i' love.txt
+            i love sed
+        here flags i and I works and does the same thing. we can use any of them.
+
+        now iam appending 2 lines to love.txt
+            sravan@BOGIREDDY:~$ echo 'this is line2.' >> love.txt
+            sravan@BOGIREDDY:~$ echo 'i love my wife with whole heart.' >> love.txt
+            sravan@BOGIREDDY:~$ cat love.txt
+            i love my wife
+            this is line2.
+            i love my wife with whole heart.
+
+        now lets do the replacement string work.
+            sravan@BOGIREDDY:~$ sed 's/my wife/sed/' love.txt
+            i love sed
+            this is line2.
+            i love sed with whole heart.
+        this replaced all words in the file with replacement string.
+        now i appended one more line.
+            sravan@BOGIREDDY:~$ echo "i love my wife and my wife loves me. Also my wife loves the cat" >> love.txt
+            sravan@BOGIREDDY:~$ sed 's/my wife/sed/' love.txt
+            i love sed
+            this is line2.
+            i love sed with whole heart.
+            i love sed and my wife loves me. Also my wife loves the cat
+        by default sed replaces only first occurace of replacement string. 
+        to avoid this behaviour use g flag(global)
+            sravan@BOGIREDDY:~$ sed 's/my wife/sed/g' love.txt
+            i love sed
+            this is line2.
+            i love sed with whole heart.
+            i love sed and sed loves me. Also sed loves the 
+        we can personalise to change the 2 nd or 3 rd or whatever the occurance 
+        you want to change you can give that number. i want to change 2 nd occurance.
+                sravan@BOGIREDDY:~$ sed 's/my wife/sed/2' love.txt
+                i love my wife
+                this is line2.
+                i love my wife with whole heart.
+                i love my wife and sed loves me. Also my wife loves the cat
+        
+        we can save the output to a new file as below
+                sravan@BOGIREDDY:~$ sed 's/my wife/sed/g' love.txt > mynew-love.txt
+                sravan@BOGIREDDY:~$ ls
+                data  love.txt  manager.txt  mynew-love.txt  practise  vprofile
+        we can also do inplace edit of original file by doing so as below.
+                sravan@BOGIREDDY:~$ sed -i.bak 's/my wife/sed/g' love.txt
+                sravan@BOGIREDDY:~$ cat love.txt.bak
+                i love sed
+                this is line2.
+                i love sed with whole heart.
+                i love sed and sed loves me. Also sed loves the cat
+        
+        we can do replace seperator charactes like
+            sravan@BOGIREDDY:~$ echo '/home/json/' | sed 's#/home/json#/export/user/jsonc#'
+            s/export/user/jsonc/
+        you can replace # with any sign or characters
+            sravan@BOGIREDDY:~$ echo '/home/json/' | sed 's:/home/json:/export/user/jsonc:'
+            /export/user/jsonc/
+
+        How to delete lines with sed?
+            sravan@BOGIREDDY:~$ sed '/this/d' love.txt
+            i love sed
+            i love sed with whole heart.
+            i love sed and sed loves me. Also sed loves the cat
+        use flag d to delete the line
+
+        to remove lines that start with #
+        sed '/^#/d' <file name>  # ^ indicates start of line
+        To remove blank lines 
+        sed '/^$/' <filename>   #  $ denotes end of line
+        to execute above operations in one line and replace string
+            sravan@BOGIREDDY:~$ cat  text.txt
+            # hello there
+            use config
+            #hi there
+            remove config
+            sravan@BOGIREDDY:~$ sed '/^#/d ; /^$/d ; s/config/http/' text.txt
+            use http
+            remove http
+        we can also use this for above 
+            sravan@BOGIREDDY:~$ sed -e '/^#/d' -e '/^$/d' -e 's/config/httpd/' text.txt
+            use httpd
+            remove httpd
+        we can write this commands as a script and pass to the sed via -f and executed
+        sed -f script.sed text.txt
+            sravan@BOGIREDDY:~$ echo "/^#/d" > script.sed
+            sravan@BOGIREDDY:~$ echo "/^$/d" >> script.sed
+            sravan@BOGIREDDY:~$  echo "s/config/httpd/" >> script.sed
+            sravan@BOGIREDDY:~$ cat script.sed
+            /^#/d
+            /^$/d
+            s/config/httpd/
+            sravan@BOGIREDDY:~$ sed -f script.sed text.txt
+            use httpd
+            remove httpd
+        we can replace the second line itself by using address
+            sravan@BOGIREDDY:~$ sed '2 s/config/httpd/' text.txt
+            # hello there
+            use httpd
+            #hi there
+            remove config
+
+        we can also serach and replace by word containing in the line
+            sravan@BOGIREDDY:~$ sed '/remove/ s/config/httpd/' text.txt
+            # hello there
+            use config
+            #hi there
+            remove httpd
+        
+        we can also spectify line number range to take it effect
+            sravan@BOGIREDDY:~$ sed '1,3 s/config/httpd/' text.txt
+            # hello there
+            use httpd
+            #hi there
+            remove config
+            sravan@BOGIREDDY:~$ sed '1,4 s/config/httpd/' text.txt
+            # hello there
+            use httpd
+            #hi there
+            remove httpd
+
+            we can also use reg expression as above.          
+
 
 2) How do you read a file in shell or bash?
 
@@ -86,6 +241,7 @@
 
 9)  How to see parent processid?
 	ps -ef
+    
 10) What is the difference between useradd and adduser?
  useradd is for rhel based and adduser is debian based. 
 11) How can you see which kernal version a system is currently running?
@@ -186,3 +342,57 @@ awk -F: '$3 > 1000' /etc/group it shows groupids greater than 1000
 
 awk '!/:$/' /etc/groups     /:$/ - lines that end with colon(:)  !/:$/ - lines that doesnt end with colon.
 in /etc/groups lines end with : doesnt have members and lines that doesnt have : at end is having members
+
+where do i see logs ?
+Linux has a special directory for storing logs called /var/log  
+Debian-based systems like Ubuntu store global activity system data  in /var/log/syslog.
+Red Hat-based systems like RHEL or CentOS use /var/log/messages
+all security-related events such as logins, root user actions, and output from pluggable authentication modules (PAM)
+ubuntu /var/log/auth.log
+Red Hat and CentOS use /var/log/secure.
+/var/log/kern.log stores kernel events, errors, and warning logs, which are particularly helpful for troubleshooting custom kernels.
+/var/log/cron stores information about scheduled tasks (cron jobs). Use this data to verify your cron jobs are running successfully.
+Apache web server writes logs to the /var/log/apache2.
+MySQL writes logs to the /var/log/mysql directory
+
+What is password less connection?
+ssh-keygen -t rsa
+generates id_rsa.pub and id_rsa under $HOME/.ssh
+copy it to remote server 
+ssh-copy-id user@host
+or manually copy id_rsa.pub that to remote host at ~/.ssh/authorized_keys
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+now we can accesss password less authentication.
+some may ask for password. we set password authentication to no in /etc/ssh/sshd_config.
+
+Difference between find and locate command?
+ find <startingdirectory> <options> <search term>
+ # <startingdirectory> where you want to start the search.
+/ (slash) — search the whole system.
+. (dot) — search from the folder you’re currently working on (current directory).
+~ (tilde) — to search from your home folder.
+ find . -name my-file # find in current directory dot(.) named my-file
+
+ locate:
+ install mlocate in system 
+Search Exact File Name
+$ locate -r my-file$ # If you want to get the file with the exact name, 
+you can use the -r option and add dollar symbol ($) at the end of your search term
+Count the Number of Files:
+locate -c my-file
+Ignore Case Sensitive:
+locate -i my-file
+
+To see the memory of a file in linux 
+use free -m.
+
+Whats the difference between Docker COPY and ADD?
+COPY takes in a source and destination.
+ It only lets you copy in a local or directory from your host (the machine-building the Docker image) 
+ into the Docker image itself.
+
+ADD  does that same but in addition, it also supports 2 other sources. 
+A URL instead of a local file/directory.
+Extract tar from the source directory into the destination.
+

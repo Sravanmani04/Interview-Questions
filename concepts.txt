@@ -1,0 +1,104 @@
+SSH between two virtual machines ie between ubuntu and centos:
+First get ip address of both machines
+To see ip address
+$ ip --breif addr show
+exec above command on both machines
+now login to centos via ubuntu
+ssh user@hostipaddr
+
+To copy recursively from centos to ubuntu
+scp -r source/path/file ipaddr:dest/file
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                                    SSH between two amazonlinux instances
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+To eshtablish connection between two amazon linux instances
+
+Create two vms with ssh port open for your ip or open to world.
+
+lets consider one as master and other as slave
+Login to the vm-slave:
+
+Set hostname on slave
+$ sudo hostnamectl set-hostname <name-of-host>
+$ sudo hostnamectl set-hostname slave
+
+Set Password for the ec2-user on slave
+$ sudo passwd ec2-user # and it asks for password give it.
+
+Set the PasswordAuthentication to yes and reboot on slave:
+
+$ sudo vim /etc/ssh/sshd_config
+    Execute the above command and change the PasswordAuthentication yes and exectu below command
+    $ sudo service sshd restart
+
+Login to the vm-master:
+
+Set hostname
+$ sudo hostnamectl set-hostname <name-of-host>
+$ sudo hostnamectl set-hostname master
+
+Set Password for the ec2-user
+$ sudo passwd ec2-user # and it asks for password give it.
+
+Now ssh to slave machine ip:
+$ ssh  <ip of slave machine>
+It asks for password to authenticate. give password and login
+
+To set password less authentication between master and slave, 
+Generate keys on master machine and copy it to slave machine.
+$ ssh-keygen  #in master machine
+The keys are generated at ~/.ssh, Now coping to slave from master.
+$ ssh-copy-id <ipaddressofslave>
+
+To eshtablish password less authentication between slave and master,
+Set the PasswordAuthentication to yes and reboot on master:
+$ sudo vim /etc/ssh/sshd_config
+    Execute the above command and change the PasswordAuthentication yes and exectu below command
+    $ sudo service sshd restart
+
+Generate keys on slave machine,
+$ ssh-keygen
+Now copy keys to master.
+ssh-copy-id <ipofmaster>
+
+Thats how passwordless authentication is eshtablished.
+
+#################################################################################################################
+                        ssh to a user in amazon linux using password less authentication
+#################################################################################################################
+
+Now create a user in slave machine named mani and give password:
+$ sudo useradd mani && sudo passwd mani # provide the password when prompted.
+
+login as user
+$ su - mani
+
+Add mani to wheel group to execute all commands in amazon linux2 
+$ usermod -aG wheel mani
+
+create .ssh directory under user home directory
+mkdir -p $HOME/.ssh
+
+Change the directorys permissions to 700 so that only user has all privilages on this directory:
+chmod 700 $HOME/.ssh
+
+Create an empty file under .ssh named authorized_keys and change permissions to 600(read and write)
+touch .ssh/authorized_keys && sudo chmod 600 .ssh/authorized_keys
+
+Now copy the public keys of server from where you want to ssh to this user
+cat public-key of master server and paste in authorized_keys of slave user.
+
+Now execute below command in master:
+ssh -i path/to/file mani@hostip 
+
+
+
+
+
+
+
+

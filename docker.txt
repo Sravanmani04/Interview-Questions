@@ -128,6 +128,11 @@ When you use a bind mount, a file or directory on the host machine is mounted in
 The file or directory is referenced by its absolute path on the host machine. 
 By contrast, when you use a volume, a new directory is created within Docker’s storage directory on 
 the host machine, and Docker manages that directory’s contents.
+docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,target=/app \
+  nginx:latest
 
     
 What is an ephemeral container?
@@ -135,6 +140,35 @@ The image defined by your Dockerfile should generate containers that are as ephe
 we mean that the container can be stopped and destroyed, then rebuilt and replaced with an absolute minimum set up and configuration.
 
 What is multistage build?
+example: 
+Dockerfile
+
+FROM golang:1.16 AS builder
+WORKDIR /go/src/github.com/alexellis/href-counter/
+RUN go get -d -v golang.org/x/net/html  
+COPY app.go ./
+RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest  
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /go/src/github.com/alexellis/href-counter/app ./
+CMD ["./app"] 
 
 Explain Docker Architecture?
+
+
+how to create docker volumes?
+Docker manages Volumes and is usually not affected by other processes running on the same host. 
+docker run --rm --name postgres-db -e POSTGRES_PASSWORD=password --v $HOME/docker/volumes/postgres:/var/lib/postgresql/data -p 2000:5432 -d postgres
+docker run --rm --name postgres-db -e POSTGRES_PASSWORD=password --mount type=volume,source=$HOME/docker/volumes/postgres,target=/var/lib/postgresql/data -p 2000:5432 -d postgres
+Bind Mounts are just a directory on the host file system and may be modified by other processes other than docker. 
+docker run --rm --name postgres-db -e POSTGRES_PASSWORD=password --mount type=bind,source="$pwd",target=/var/lib/postgresql/data -p 2000:5432 -d postgres
+bind mounts creation: 
+docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,target=/app \
+  nginx:latest
+
 

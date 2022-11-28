@@ -159,3 +159,28 @@ kubectl config unset users.foo                       # delete user foo
 # permanently save the namespace for all subsequent kubectl commands in that context.
 kubectl config set-context --current --namespace=ggckad-s2
 
+What is istio?
+
+what is taints and tolerance in kubernetes?
+Taint are set to nodes and tolerations are set to pods
+3 types of tains that can be scheduled on nodes
+noSchdule
+prefer no schedule
+no execute
+kubectl taint node node1 key=value:noschedule
+tolerations set on nodes
+tolerations:
+- key: "key1"
+  operator: "Equal"
+  value: "value1"
+  effect: "NoSchedule"
+- key: "key1"
+  operator: "Equal"
+  value: "value1"
+  effect: "NoExecute"
+How do i schedule a pod on to a node that has specific hardware?
+
+Whats the difference between persistant volume and persistant volume claim?
+
+Lets say two pods are running and those are associated with a secret written in manifest file. now i changed the 
+password in there what will happen? 

@@ -6,6 +6,8 @@ The user typically interacts with shell via command line interface
 What is host-key-checking?
 Checking host keys guards against server spoofing and man in the middle attacks. 
 when ever the host reinstalls and has a different keys in Known_hosts then error occurs until it get corrected.
+with removing the old one ssh-keygen -f ~/.ssh/known_hosts -R <host ip>
+and update with ssh-keyscan -r rsa <hostip> >> ~/.ssh/known_hosts
 
 What is Ansible role?
 Ansible roles allow you to develop reusable automation components by grouping and encapsulating related 
@@ -97,6 +99,7 @@ roles/
     webtier/              # same kind of structure as "common" was above, done for the webtier role
     monitoring/           # ""
     fooapp/               # ""
+
 Alternative directory:
     inventories/
    production/
@@ -143,4 +146,71 @@ which commands, modules, and tasks in a playbook operate. The common format of a
 
  [test]    # group
  test1  ansible_host=remote_host ansible_user=remote_user ansible_private_key_file=/path/to/file
+
+what are adhoc commands in ansible?
+Ansible ad hoc command uses the /usr/bin/ansible command-line tool to automate 
+a single task on one or more managed nodes.
+The default module for the ansible command-line utility is the ansible.builtin.command module.
+Use cases for ad hoc tasks
+
+Rebooting servers
+I can use adhoc commands  to call command module and reboot all servers inatlanta, 10 at a time.
+For that i have to list all servers of altlanta and group them under [atlanta] in my inventory file.
+I must have working ssh credentials for that group.
+To generate and copy keys
+$ ssh-keygen   # generates public and private keys.
+the keys gets stored under ~/.ssh
+public key has read permissions for user, groups and others and user also has write permission
+private key has read write permissions set only for user 
+the keys can be copied in two ways:
+using ssh-copy-id:
+ $ ssh-copy-id remote_user@host # it stores the keys at $HOME/.ssh/authorized_keys.
+can configure manually by copying files from host to $HOME/.ssh/authorized_keys on remote hosts.
+then after use this command 
+
+ansible atlanta -a "/sbin/reboot"
+
+To reboot the [atlanta] servers with 10 parallel forks:
+$ ansible atlanta -a "/sbin/reboot" -f 10
+
+/usr/bin/ansible will default to running from your user account. To connect as a different user:
+$ ansible atlanta -a "/sbin/reboot" -f 10 -u username
+
+
+Managing files:
+Copying files:
+ansible atlanta -m ansible.builtin.copy -a "src=/etc/hosts dest=/tmp/hosts"
+
+changing ownership and permissions on files:
+$ ansible webservers -m ansible.builtin.file -a "dest=/srv/foo/a.txt mode=600"
+$ ansible webservers -m ansible.builtin.file -a "dest=/srv/foo/b.txt mode=600 owner=mdehaan group=mdehaan"
+
+The file module can also create directories, similar to mkdir -p:
+$ ansible webservers -m ansible.builtin.file -a "dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=directory"
+
+Delete files:
+$ ansible webservers -m ansible.builtin.file -a "dest=/path/to/c state=absent"
+
+Managing packages:
+To ensure a package is installed without updating it:
+
+$ ansible webservers -m ansible.builtin.yum -a "name=acme state=present"
+To ensure a specific version of a package is installed:
+
+$ ansible webservers -m ansible.builtin.yum -a "name=acme-1.5 state=present"
+To ensure a package is at the latest version:
+
+$ ansible webservers -m ansible.builtin.yum -a "name=acme state=latest"
+To ensure a package is not installed:
+
+$ ansible webservers -m ansible.builtin.yum -a "name=acme state=absent"
+
+Managing users and groups
+You can create, manage, and remove user accounts on your managed nodes with ad hoc tasks:
+
+$ ansible all -m ansible.builtin.user -a "name=foo password=<crypted password here>"
+
+$ ansible all -m ansible.builtin.user -a "name=foo state=absent"
+
+
 
