@@ -1,0 +1,18 @@
+
+Git Documentation: https://git-scm.com/doc
+Difference between git and github:
+Git: 
+    It is the version control software that runs locally on your machine.
+    No Account registration needed.
+    No internet needed
+    Can use offline without touching github.
+
+Github:
+    It is service that host git repositories on the cloud.
+    Easier to collaborate with other people
+    Sign up an Account to use git hub.
+    online place to share work using git.
+
+Git Repo:
+    A Git repo is a workspace which tracks and manages files with in a folder.
+    Whenever you want to start a project or app, you need to create a git repository.

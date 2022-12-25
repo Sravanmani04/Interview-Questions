@@ -94,31 +94,7 @@ If it works I can Deploy the code into  Prod server As Release1.
 Like As above Developers may work on different FEatures and Version the working code, make tests on it and deploy it on to production.
 And this Cycle continues.
 
-Branching Strategies:
-https://www.youtube.com/watch?v=yiBXi2JIB_M&list=RDLVBg8tiOLZw4A&index=8
-    Trunk Based Strategy
-    Feature Branching
-    Forking (Used for Open source Software)
-    Release Branching Strategy
-    Git flow Strategy
-    Environment Branching Strategy.
 
-
-    Trunk based Strategy: It is a Single branch Development Where  there will be main branch, Which is also called as trunk.
-            And this is the branch where all the Developers pull and push the code.  
-            It is a Version controlled Management Practise.
-            Here Developers Creates the Feature branches And Develop on these Branches and once Working code is ready They merge that code
-            on to trunks or master. This is Called as trunk based Development.
-                For Example: lets say there is software team of Developers, Each Developer is Responsible for implementing a Feature.
-                                Each developer creates a feature branch, and starts developing that feature, once it is ready, 
-                                He merges the feature to the trunk or the master. 
-                                When the developer frequently merges the code to the master,So that we can get early feedbacks.                
-            Trunk Based development is a required practise for continuous integration
-            CI = Trunk Based development + Fast Automated test cases.
-            Benefits:
-                Short lived branches
-                Faster Feedbacks
-                Avoid Huge merge Conflicts
 
 
 

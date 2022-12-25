@@ -1,0 +1,92 @@
+Branching Strategies:
+https://www.youtube.com/watch?v=yiBXi2JIB_M&list=RDLVBg8tiOLZw4A&index=8
+    Trunk Based Strategy
+    Feature Branching
+    Forking (Used for Open source Software)
+    Release Branching Strategy
+    Git flow Strategy
+    Environment Branching Strategy.
+
+
+    Trunk based Strategy: It is a Single branch Development Where  there will be main branch, 
+                            Which is also called as trunk.
+            And this is the branch where all the Developers pull and push the code.  
+            It is a Version controlled Management Practise.
+            Here Developers Creates the Feature branches And Develop on these Branches and 
+            once Working code is ready They merge that code on to trunks or master. 
+            This is Called as trunk based Development.
+                For Example: lets say there is software team of Developers, 
+                                Each Developer is Responsible for implementing a Feature.
+                                Each developer creates a feature branch, and starts developing that feature, 
+                                    once it is ready, He merges the feature to the trunk or the master. 
+                                When the developer frequently merges the code to the master,
+                                So that we can get early feedbacks.                
+            Trunk Based development is a required practise for continuous integration
+            CI = Trunk Based development + Fast Automated test cases.
+            Benefits:
+                Short lived branches
+                Faster Feedbacks
+                Avoid Huge merge Conflicts
+
+    Git Feature branch model:
+    https://www.youtube.com/watch?v=j7YDbrS9I48&t=57s
+    Feature-based development breaks up branches based on the needs of the project.
+    Breaking up developmemt by feature can helps teams go faster.
+    Easily tested in isolation and introduced back to the project for integration
+
+    Pros:
+    Easily Manage Large scale projects.
+    Thosuands of developers can work on specific feature.
+    Code can be easily tested and introduced to code base.
+
+    Cons:
+    Difficult to manage thousands of branches.
+    Requires lot of co-ordination to work.
+    Team needs senior Developer or manager to cope up managing branches and merges.
+
+    THere is a git with master branch.
+
+    I wanted to add a button ser-34-Addbutton. that is the task. and assigned to siva.
+    Then sive created a branch called ser-34-addbutton, and made couple of commits to reach his mile stone.
+    After when he was happy with the code he made a pull request+ code review+ demo.
+    Lets say I am the Approver and i reviewed the code and Asked for the demo with siva 
+    and satisfied with the code.
+    After The satisfaction I merged the code with the master Branch.
+    This is all About one developer and one reviewer.
+    Now Luke is tasked to "more blue". He created his own branch and quickly reached his milestone.
+    He Made a pull request and that is Approved and merged to master branch.
+    Now siva is taking a bit longer and he was not able to commit as he is out of sync with master. 
+    Here Git helps with pulling the latest code from master branch and after his mile stone he raised a pull request and merged to master branch.
+    Benefits:
+        Stable master branch with working code.
+
+Forking Branch Strategy:
+        Fork is a copy of an Existing Branches. Fork is independent from original repository.
+        If the original repository gets deleted then frok remains.
+        When you fork a repository, you get the repository and all the branches.
+        Forking is a type of cloning a repository at some point and modify it from there.
+
+Release branching Strategy:
+Git flow branching Strategy:
+GitFlow
+Considered to be a bit complicated and advanced for many of today’s projects, 
+GitFlow enables parallel development where developers can work separately from the master branch on features 
+where a feature branch is created from the master branch.
+
+Afterwards, when changes are complete, the developer merges these changes back to the master branch for release.
+
+This branching strategy consists of the following branches:
+
+Master 
+Develop
+Feature- to develop new features that branches off the develop branch 
+Release- help prepare a new production release; usually branched from the develop branch 
+            and must be merged back to both develop and master
+Hotfix- also helps prepare for a release but unlike release branches, 
+hotfix branches arise from a bug that has been discovered and must be resolved; 
+it enables developers to keep working on their own changes on the develop branch while the bug is being fixed.
+The main and develop branches are considered to be the main branches, 
+with an infinite lifetime, while the rest are supporting branches that are meant to 
+aid parallel development among developers, usually short-lived.
+
+
