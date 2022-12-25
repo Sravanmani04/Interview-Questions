@@ -1,0 +1,174 @@
+What are release blockers?
+Its an item or something that inhibits or prevents the progress of a process like missing piece of information, change in person or scope.
+usually project blockers are easy to identify:
+    The flow of information in a project is easily controlled by dependencies and tasks that must be completed before the others.
+    These project blockers may have major impact on reaching our goals. 
+
+Projects blockers vs impediments:
+    An impediment is anything that slows down the proces or makes more difficult reach goals.
+    example: lack of resources , bad weather conditions, etc.....
+
+    project blocker is also an impediment that stops the project. its a showstopper that cannot be worked around.
+
+Diagnosing the issue: deeper analysis of couse for blockage.
+    when I discover the project barrier, I investigate the scenario further to ensure that it doesnt recur. we look for solutions and 
+    counter measures as well to prevent the future difficulties.
+
+    To avoid going into dead ends we follow some techniques such as :
+        1. Five why
+        example: 
+                Why are we not meeting deadlines? Because we are not finishing our tasks on time.
+                Why are we not finishing our tasks on time? Because we are not starting our tasks on time.
+                Why are we not starting our tasks on time? Because we are not getting the information we need to start our tasks.
+                Why are we not getting the information we need to start our tasks? Because no one is responding to our emails.
+                Why is no one responding to our emails? Because they do not think it is urgent.
+
+        2. ishikawa Diagram or fish bone diagram or cause and effect Diagram:
+                This tool usually brainstroms all the potential causes of a problem. once we have identified the possible causes, 
+                    then we can narrowdown the causes of the issues.
+        example:
+        For example, let’s say you’re trying to improve your team’s productivity. Potential causes:
+                Lack of training
+                Poor communication
+                Inefficient processes
+                Unclear goals
+                After brainstorming the potential causes,
+                    you can then start to investigate which one is the most likely cause of the problem. 
+                    This will help you focus your efforts on the right areas so you can make the most impact.
+
+What are the most common blockers in project management?
+    1. People Blockers
+    2. Time Blockers
+    3. Dependency Blockers
+    4. Feedback loop Blockers
+    5. Communication Blocker
+    6. Technological Blockers                              
+
+1. People blockers: Peoples can be blockers projects success for all sorts of reasons.
+examples: Conflict between personalities ie disagreement between personalities on the project direction.
+          lack of Knowledge or skills.
+
+2.Time Blockers: A Projects needs a schedule for its timely completion. This schedule holds everything together. This avoids costly delays.
+    measures: The key to avoid these delays are understanding the factors causing it, so that we can mitigate them by taking relevant steps.
+
+3.Feedback loop blockers: These can throw a big damper on project momentum.
+    Reasons: Communication breakdowns, not clear on roles and responsibilities, 
+            lack of transperancy on project objectives, unrealistic deadlines
+
+4. Dependency blockers: All projects will have dependencies. when they start to pile up they become a major blocker to the project.
+        causes: One project may depend on other project to start theirs
+                This dependent task may be time consuming, which can throw all the project schedule backwards.
+                outside vendor or service provider may fail to provide their sevices or promises.
+
+5. Communication Blocker: 
+        reasons:
+            disagreement between personalities on the projecct direction,
+            Irregular feedbacks from team members
+            Lack of effective communication.
+            
+
+
+
+
+
+
+
+
+What is Release Management?
+        It Mainly applies to software projects.
+        Its the process of planning scheduling managing and controlling the progress of a software build 
+                through various stages of development, testing and deployment.
+
+        Release management in Devops is about planning, scheduling and controlling 
+                the software development and delivery process.
+
+        IT operations and developers collaborate from the beginning of the process to the end in DevOps 
+            for shorter and fewer feedback loops and faster releases.
+        
+        In Devops all the steps are equally important but critical stages for Devops are:
+            >> Interaction between developers team and operations team.
+            >> The software release stage 
+            >> Feedback after monitoring to Developers so that bugs are cleared.
+
+    Release management has 10 different components (view the image in below link):
+https://user-images.githubusercontent.com/100459127/204464319-24e84e25-d3ed-4e8f-b45e-af020be44d6b.png
+
+        Release Pipeline:
+            A particular release process from planning to delivery.
+        Release value stream:
+            The release process that add or create value across the release pipeline. 
+        Release policy:
+            Consists definition of Release types, standards and governance requirements for an organization.
+        Release Templates:
+            is a single or repeatable workflow process for release pipeline which includes human and Automated Activities.
+        Release Plan:
+            A structured plan of an instance of a release template developed for a specific release.
+        Deployment plan:
+            Deployment plan consists of activities to deploy a release to the production environment.
+        Release unit:
+            The set of artifacts are released together to implement a specific feature.
+        Release Package:
+            Release package is a combination of release units deployed together as a single release 
+                due to interdependencies, scheduling or businesspriorities. 
+        Major Release:
+            Infrequent release packages that include many release units that have a high or critical business impact.
+        Minor Release:
+            More Frequent release packages with fewer release units that do not include critical components.
+
+Strategies of release management:
+        Release windows(slow cadence)
+        Release Train
+        Release windows(Quick cadence)
+        Continuous Release Availability.
+
+        Release Windows(slow cadence): It is a period of time in which one or more teams release into production.
+        Release Train: The idea behind release train is that 
+            every team involved with that "Train" has the same release cadence. This strategy is used in large programs
+            Explanation: 
+                        Lets say we have 3 developers releasing code individually to operations and its deployed then 
+                        it is called as release windows where as, As a rule of thumb all the releases were deployed at once
+                        not individually then it is called as release train. mostly industry follow this.
+        Release Windows(Quick cadence): The quick cadence release  are less likely to suffer from the bottleneck
+            challengesassociated withslow cadencerelease windows and release trains
+        Continuous release Availability: With this approach delivery teams are allowed to release 
+        their solutions into production whenever they needed to.
+
+Benefits of release management:
+        1. Accelerated time to value
+        2. Higher release throughput
+        3. Enhanced agility and flexibility
+        4. Increased Productivity
+        5. Eliminate duplicat and manual intensive Activities
+        6. Mitigate Release failure
+
+Tools for release management:
+        xebialabs Release
+        Octopus deployed
+        Task top
+        chef
+        jenkins
+        LAunchDarkly
+        urban code
+        salt stack
+        clarive.
+         
+
+            
+                
+        Release management have different stages and those are:
+            https://user-images.githubusercontent.com/100459127/204445571-020936d4-d617-4814-a365-f5270d538c17.png
+                Specification
+                development
+                unit testing
+                Integration testing
+                system testing
+                user acceptance Testing
+                sign-off
+                Deployment
+
+        It requires a set of things like
+                        Technical Knowledge
+                        Risk management
+                        StakeHolder Engagement
+                        Business Awareness
+                        Contingency planning, rollback, recovery, crisis management

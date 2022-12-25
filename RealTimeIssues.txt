@@ -1,0 +1,9 @@
+Devops Production Issues/ bug in production/ Branching Strategy/ Real time issues in Devops.
+https://www.youtube.com/watch?v=HBCrDYlo2Tc 
+
+REAL TIME ISSUES:
+     Bug in productions:
+     To Resolve a bug in production, As a devops Engineer, what is the Branching Strategy?
+     Solution: 
+
+

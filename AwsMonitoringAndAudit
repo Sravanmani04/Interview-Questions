@@ -1,0 +1,70 @@
+Monitoring ensures that our applications are running in the rightway by following below:
+logs
+Metrics
+Tracing 
+Audits
+
+Amazon Cloud Watch:
+                                    CLOUD WATCH METRICS:
+                    provides metrics for every services in AWS
+                    Metric is a Variable in monitor.(CPU Utilization, networkin, etc)
+                    Metrics belongs to namespaces
+                    Dimension is an Attribute of metric(instance id, environment, etc)
+                    upto 10 Dimensions per metric
+                    Metrics Have timestamps
+                    Can create cloudwatch Dashboard of metrics
+                    Can create cloud watch custom metrics
+
+    Cloud Watch metric Streams:
+        Continuously stream cloud watch metrics to a Destination of your choice with near real-time delivery and low latency:
+
+           a. Amazon Kinesis Datafirehose(And its destinations)
+           b. 3rd party service providers: Datadog, Dynatrace, New relic, Splunk, Sumo Logic...etc
+
+            a.Amazon Kinesis Datafirehose:
+                                                    cloudWatch Metrics
+                                                            | (stream near real time)
+                                                    Kinesis Data firehose
+                                                            |(Send Data to)
+                |---------------------------------------|------------------------------------------------|  
+            Amazon S3                           Amazon Redshift                             Amazon Opensearch
+                |                     (To Have Data Warehousing for the metrics)     (To build Dashboard and Do analytics)
+             Athena
+    (Used to Analyse data in s3)
+
+        option to filter metrics to only stream a subset of them to kinesis
+
+
+
+                                                CLOUD WATCH LOGS
+                        Log Groups: Usually Represents an Application(Aribitary Name)
+                        Log Streams: instances with in an Application,logfiles, containers
+                        can define Log expiration policies(never expire, 30 days,etc):
+                        Cloud Watch logs can send Logs to:
+                            Amazon s3(exports)
+                            Kinesis data streams
+                            kinesis Data firehose
+                            AWS Lambda
+                            ElasticSearch
+
+        What Type of logs Can go into cloud watch logs?(Sources)
+        We can send logs using
+                1. SDK, Cloudwatch logs Agent(Deprecated), Cloudwatch Unified agent(in use)
+                2. Elastic Beanstalk: which collects logs directly from Application
+                3. ECS: Collects logs directly from containers
+                4. AWS Lambda: Collects logs from functions themselves.
+                5. VPC Flow Logs: sends logs of Vpc Specific metadata from network traffic.
+                6. API gateway will send all the requests made to the api gateway into cloudwatch logs
+                7. Cloud trail will send logs based on a filter.
+                8. Route 53: send DNS Queries logs to cloud watch logs
+
+
+        CLoud Watch logs, metric filter and insights:
+            Cloudwatch logs can use filter expressions:
+                For example: To find a specific ip inside a log
+                            or we can see the no of occurances of "ERROR" in your logs.
+                And the above Metric filters or filter expressions can be used to trigger cloud watch Alarms
+
+
+            CloudWatch log insights:
+                Used to Query logs and add queries to the cloudwatch DashBoards 

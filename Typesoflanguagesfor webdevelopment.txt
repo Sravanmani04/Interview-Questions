@@ -1,0 +1,33 @@
+Several Programming Languages are used for web development.
+examples:
+        python, java, php, html and lots more...
+Each language is broadly classified into two categories.
+1) Frontend Development languages
+2) Backend Development Languages
+
+Frontend development Languages: 
+                Used to develop a part of the websites where user can see
+                When you open a website on your device, What you see is your frontend.
+                Graphical user interface of a website.
+                It is built on Html, css and some java script.
+
+Backend Development Languages:
+                If there is a front end, then backend definitely exit. This is the part where user cannoot see.
+                For Dynamic websites, This is where all the works gets done.
+                Example:
+                    When you fill out a form on a website, the backend Handles it. 
+                    The backend can be built with python, php, java and lots more...
+
+10 best programming languages are:
+1)JavaScript
+2)React
+3)Express
+4)React Native
+5)Ruby on Rails
+6)Java
+7)Ruby
+8)SQL
+9)TypeScript
+10)python
+11)Angular
+12)PHP

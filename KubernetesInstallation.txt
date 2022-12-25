@@ -1,0 +1,57 @@
+Development
+    Kubernetes using minikube
+    Kubernetes using Docker for Desktop
+Unmanaged(Installer based):
+    kubeadm
+    kops
+    kubespray
+Managed:
+    AKS: Azure kubernetes service
+    EKS: Elastic Kubernetes service
+    GKE: Google Kubernetes Engine 
+    OKE: Oracle Container engine for Kubernetes.
+
+#################################################################################################
+
+                            kubernetes EKS Cluster via console 
+
+#################################################################################################
+
+(https://www.youtube.com/watch?v=DcnviAwmzM4&t=434s)
+First create masternode then worker node.
+Master node on user console:(create EKS on user console not on root)
+Things to keep in mind before creating a cluster. 
+(You should not create the cluster with root account. 
+Instead create a user or if you want to install EKS with aws cli create IAM role for the EC2 instance 
+that you are going to run aws cli commands)
+    I have created a Amazon linux ec2 instance.
+    installed Aws cli in amz ec2 and configured with user access and secret keys. This user should have eks cluster policy enabled
+    installed kubectl in amz ec2
+    created cluster with iam role - EksClusterpolicy
+    To check the status of the cluster via command line 
+    $ aws eks --region <region> describe-cluster --name <name of the cluster> --query cluster.status
+    To update the configuration to current cluster
+    $ aws eks --region <region> update-kubeconfig --name sravan-master
+
+worker nodes:
+        in cluster go to compute section and add node group
+        IAM roles for worker nodes
+        1) AmazonEKS_CNI_Policy
+        2) AmazonEKSWorkerNodePolicy
+        3) AmazonEC2ContainerRegistryReadOnlypolicy
+    After creating roles and worker nodes, to see the node status
+    $ kubectl get nodes --watch (Shows the current ongoing status of the nodes)
+
+    And now you can perform all the Kubernetes commands.
+
+
+#################################################################################################
+
+                                kubernetes cluster using eksctl:
+
+#################################################################################################
+
+EKSCTl:
+        cli tool for creating clusters on eks 
+        Easier than consoleAbstracts lot of stuff - vpc, subnet, sec-groups etc, 
+        using cloud formation. 

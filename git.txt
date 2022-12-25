@@ -69,6 +69,62 @@ cat .gitconfig to see the global configurations
 What is the difference between centralised version control and distributed version control system?
 
 What are the branching stratigies in git?
+Git Branches:
+https://www.youtube.com/watch?v=SGwTt5k4Gjc&list=RDLVBg8tiOLZw4A&index=2
+    By Default When ever we create a repository it creates a master branch and All our commits sit in this branch.
+    We can create our own branches and we can remove master branch if we want to, as it is a default branch.
+    Devops Work flow:
+scm > Build > Unit testing > Code Quality Analysis > Code Security Analysis > Artifact Repository > Deployment tool > Server
+Here lets Assume that all the pipeline was set up for build, test, generate Artifacts and Gets deployed on to the server.
+    If I am having only one branch, I have to worry for each and every deployment whether my code is working or not.
+    So if have Another branch and Deploying from this branch,I can confidently say that this is working code.
+    Branches Helps us to differentiate between working and buggy codes and let us deploy working code into production environments.
+
+How Can we differentiate between Working code and code with bugs?
+https://www.youtube.com/watch?v=Bg8tiOLZw4A&list=RDLVBg8tiOLZw4A&index=1
+
+Lets Say we have test QA And Production branches with test server, QA server and Prod server respectively.
+Prod Servers Are used by clients or end users, So To Deploy code on to prod server we need to make sure that the code is working, 
+For that we are going to take advantage of test and Qa branches.
+For Example, I am Developing an Application and wrote a piece of code which is working fine in test server ie laptop but,
+I dont know whether it will work in prod server or not. At this point we cannot push the code directly to the prod server.
+I can name this working code as version1. 
+Now I can check the code integrity and other tests on this working code by cloning the code on to the QA server.
+If it works I can Deploy the code into  Prod server As Release1. 
+Like As above Developers may work on different FEatures and Version the working code, make tests on it and deploy it on to production.
+And this Cycle continues.
+
+Branching Strategies:
+https://www.youtube.com/watch?v=yiBXi2JIB_M&list=RDLVBg8tiOLZw4A&index=8
+    Trunk Based Strategy
+    Feature Branching
+    Forking (Used for Open source Software)
+    Release Branching Strategy
+    Git flow Strategy
+    Environment Branching Strategy.
+
+
+    Trunk based Strategy: It is a Single branch Development Where  there will be main branch, Which is also called as trunk.
+            And this is the branch where all the Developers pull and push the code.  
+            It is a Version controlled Management Practise.
+            Here Developers Creates the Feature branches And Develop on these Branches and once Working code is ready They merge that code
+            on to trunks or master. This is Called as trunk based Development.
+                For Example: lets say there is software team of Developers, Each Developer is Responsible for implementing a Feature.
+                                Each developer creates a feature branch, and starts developing that feature, once it is ready, 
+                                He merges the feature to the trunk or the master. 
+                                When the developer frequently merges the code to the master,So that we can get early feedbacks.                
+            Trunk Based development is a required practise for continuous integration
+            CI = Trunk Based development + Fast Automated test cases.
+            Benefits:
+                Short lived branches
+                Faster Feedbacks
+                Avoid Huge merge Conflicts
+
+
+
+
+
+
 
 What is the difference between git reset and git revert?
 

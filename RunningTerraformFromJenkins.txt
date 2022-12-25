@@ -1,0 +1,9 @@
+Install Terraform in jenkins Agent.
+Install Terraform jenkins plugin.
+Setup Path in jenkins.
+Jenkins Agent must have appropriate eks iam role.
+Create Vpc with Terraform Jenkins.
+Terraform taken from Official AWS EKS blueprints
+https://github.com/aws-ia/terraform-aws-eks-blueprints
+Require helm
+https://helm.sh/docs/intro/install

@@ -1,3 +1,26 @@
+What is Devops?
+Devops is a methodology that brings "Dev" and "Ops" teams together.
+https://user-images.githubusercontent.com/100459127/204460375-5792d981-87a7-4715-8245-35b7a63a07d6.png
+DevOps is a process/methodology to develop software.
+Devops integrates all the three functions- dev,ops and qa into a single it entity that delivers value.
+https://user-images.githubusercontent.com/100459127/204460915-30d590ac-3393-4735-91af-19062d8920f3.png
+Stages in Devops are:
+        code
+        build
+        test
+        release
+        deploy
+        operate
+        monitor
+        control
+Tools required for Devops:
+
+
+
+
+
+
+
 To know about ci and cd more watch below video link:
 https://www.youtube.com/watch?v=tBlj1J11f88
 

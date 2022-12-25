@@ -1,0 +1,145 @@
+What is a Web Application?(https://www.claysys.com/blog/types-of-web-applications/)
+A web application is an Application program that is stored on a remote server and delivered over the internet
+through a browser interface.
+They can be used by anyone from organisation to an individual.
+
+How Web applications work:?
+
+They don't need to be downloaded, but can be accessed through a network.
+Users can Access Webapplications through web browser such as mozilla firefox, google chrome, safari etc.
+For webapp to operate, it needs,
+        webserver: 
+        Manage the request from a client.
+        Examples:
+                Apache Http server
+                nginx... etc.,
+        
+        Application server:
+        Completes the Requested task,
+        Program thet resides on the server side.
+        Server programmer providing Business logic behind any application
+        Examples:
+                Tomcat
+                jBoss
+                Weblogic
+                Websphere etc
+
+        Database:
+        Used to store any needed information.
+        Examples:
+                Microsoft SQL
+                Mysql
+                mongodb
+                SQLite
+                Postgresql
+                MariaDb.
+
+8 types of web applications.
+
+1) Static web application
+2) Dynamic Web Application
+3) E-Commerce Web application.
+4) Single page Webapplication(SPA)
+5) Portal Webapplication
+6) Content Management System webapplication(CMS)
+7) Animated Web applications
+8) Rich internet Webapplications(RIA)
+
+Static Web Application: 
+        This is built using Html, css and some Java scripts  to exhibit significant content and information.
+        It includes gifs, videos etc. modifying static websites are not easy as it requires dowloading, modifying 
+        and returning Html code. This application is suited for software development companies and 
+        professional webmasters
+        Examples:
+                resume websites, portfolio websites, brochure websites, one-off landing pages
+
+Dynamic web application:
+        Delivers the live data based on the request of users. 
+        These apps have technical sophistication than static websites.
+        These webapplications use databases to store all the public and private Data displayed on the website.
+        They have Admin panel to control front-end and backend portions.
+        These Administrators can change or modify the contant and can include interactive components on webapps.
+        These dynamic webapps are built on various programming languages like PHP or ASP.NET
+        Examples:
+                 Youtube, google, Facebook, twitter, e-commerce websites  etc....
+
+E-Commerce Web Application:
+        An app that promotes products and services directly to your potential customers, 
+        you can call it as E-Commerce webapplication.
+        Basic features of E-commerce webapp:
+            Addition of new products
+            Removal of outdated and old products.
+            Managing payments
+            Facilitating electronic payments
+            A user friendly interface.
+        An effective management panel is important to carryout the above tasks.
+        Professional website Developers are required to make the apps user friendly.
+        Examples:
+                Flipkart, Amazon, Ajio and lots more.......
+
+Single page web-application(SPA):
+        This is a type of Dynamic Webapplication. These are simple and Faster
+        This Doesnt require browser reloads, functions as a single unit of webapplication.
+        These are Fast and dynamic as they implement all business and technological strategies in the client side browser.
+        since communication takes place at asynchronous navigation, the process of dealing with user request and response is faster.
+        Examples:
+                netflix, twitter, gmail etc.....
+
+Portal Web Application:
+        It is Single Access point where particular type of user's important data is Accessed.
+        THses are the best options for the organisations and businesses that prefer to build customised interfaces 
+        to suit the needs of their target Audience.
+        Only Registered users are allowed and their Activities are monitored by the service provider, once they login
+        Examples:
+                Vendor portals
+                Patient portals
+                intranet
+                government portals
+                Student and Faculty portals
+                Banking and insurance portals
+
+Content Management system web portals:
+        Content Management system(CMS) is a website Application,
+        Where owner can modify the content without the help from technical team.
+        The Admin panel can modify the content without the knowledge of any programming language
+        Some of the Content management web applications are:
+                1) Wordpress: 
+                Most widely used platform by major enterprise owners who changed their business online
+                Features of wordpress:
+                    Themes
+                    plugins
+                    tutorials... and lots more to make your website Attractive and distinctive.
+                Doest require Technical Assistance from Outside.
+
+                2) Joomla
+                Second most popular choice after wordpress
+                it does have good community and Advanced web application
+
+                3) Drupal 
+                Open source and free webapplication, so we can create our own website.
+                Suggested for building Big community portals.
+
+Animated Webapplications:
+            Allows you to display all your content along with Animated effects
+            These Application types offer creativity and Design, Which cannot be found in other webapplications
+            This Application is not suitable for Web positioning or SEO.
+            hint: (Web Positioning: it is a service offered by companies to their customers in order to make their
+            website in a natural way, which is called SEO. 
+            SEO is Search Engine optimisation -improve your website visibility when customer search for their products or services)
+            Examples:
+                    Blizzard, waze, marie webber ...etc......
+Rich Internet Webapplications:
+            These Are primary applications that has Functionality of many Desktop Applications.
+            Designed to fix browser restrictions and rely on plugins on the customer side.
+            These webapp has been created for:
+                More efficient and visually Attractive resources with a more interactive user interface
+                Better Understanding than older desktop applications
+                Some RIA works offline as well
+            Two main issues of RIA's are:
+                Risks and Inconvenience they cause.
+                If a plugin is outof date then many parts of app or whole app dont work properly.
+            Examples:
+            AJAX, Adobe flash etc.........
+
+        
+
