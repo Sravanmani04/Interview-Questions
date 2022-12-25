@@ -1,0 +1,98 @@
+
+### This project lets us know how to take backup of a database using jenkins job.###
+
+configure ubuntu20.04 ec2 instance with 22 port open.
+
+ssh into the ubuntu instance.
+$ ssh -i <keypath> ubuntu@<Publicip or public dns>
+
+install Docker on it.
+$sudo apt-get update -y
+ sudo apt install docker.io -y
+ sudo apt install docker-compose -y
+ docker version 
+ ocker-compose version
+
+After installing Docker,
+Write a docker file for remote_host container and docker compose file for jenkins and remote-host
+
+#####################################      Dockerfile       #####################################                                  
+FROM centos
+MAINTAINER sravan
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN cd ~
+RUN yum update -y && yum install openssh-server -y
+RUN useradd remote_user && echo "remote_user:1234" | chpasswd && mkdir -p /home/remote_user/.ssh && chmod 700  /home/remote_user/.ssh/
+COPY remote-key.pub /home/remote_user/.ssh/authorized_keys
+RUN chown remote_user:remote_user /home/remote_user/.ssh/ && chmod 600 /home/remote_user/.ssh/authorized_keys
+RUN ssh-keygen -A
+EXPOSE 22
+CMD /usr/sbin/sshd -D
+
+#####################################      Dockerfile       #####################################
+
+#####################################  Docker-compose file  #####################################
+version: '3'
+services:
+    jenkins:
+       container_name: jenkins
+       image: jenkins/jenkins
+       ports:
+        - "8080:8080"
+       volumes:
+        - "$./data:/var/jenkins_home"
+       networks:
+        - net
+    remote_host:
+       container_name: remote_host
+       image: remote_host
+       build:
+          context: centos
+       networks:
+        - net
+networks:
+   net:
+
+#####################################  Docker-compose file  #####################################
+
+To build the remote host first 
+$ docker-compose build 
+this builds the remote_host image.
+
+use docker-compose to build the remotehost and jenkins containers.
+
+$ docker-compose up -d 
+
+When you see the containers only remote host will be running and jenkins is not running.
+docker ps
+
+jenkins ran and exited 
+docker ps -a
+
+Check sudo docker logs jenkins for issue:
+
+touch: cannot touch '/var/jenkins_home/copy_reference_file.log': Permission denied
+Can not write to /var/jenkins_home/copy_reference_file.log. Wrong volume permissions?
+
+make sure that the volumes assigned for jenkins are user owned so that no file permissions are faced
+
+for this 
+$ chmod 777 $HOME/*   to give permissions
+
+Now as docker containers canbe contacted by names dns names
+ssh remote_user@remote_host 
+
+you see below problem 
+
+system is booting up. unprivileged users are not permitted to log in yet. 
+please come back later. for technical details, see pam_nologin(8)." connection closed by 172.19.0.3 port 22
+
+go to remote host and delete /run/nologin
+$ rm -rf /run/nologin
+
+now you can easily ssh from instances
+
+
+

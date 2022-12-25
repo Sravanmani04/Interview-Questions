@@ -1,0 +1,72 @@
+In this we are going to learn Networks
+we will learn a key concept which you will need in most applications you're going to dockerize 
+and that will be networks and how you can use networks from inside your containers.
+Now with networks here,
+
+-> you can connect multiple containers,
+
+-> you can let them talk to each other
+
+-> you could connect an application running in a container to your local host machine.
+                And for example, send HTTP requests to some other service running on your machine.
+                And also how you can reach out to the world wide web from inside your container.
+
+
+Container to www communication: 
+we can make application inside a container can  make http request to www to getaccess to some.api.com. 
+it just works without making any changes to a container.
+
+
+container to local host communication:
+we can also eshtablish communication between container to local host that has server database etc.
+To make this happen where ever we have url just replace ip or localhost with host.docker.internal as domain
+and bulid image.
+
+
+Container to container communication: A basic way:
+We can also connect between containers in docker. Here host.docker.internal doesn't work.
+when you inspect the container you can see under network setting, you can find ip address. 
+you can use that ip to connect between containers internally.
+
+Elegant way of container to container communication:
+     Before we have seen eshtablishing communication between containers with inernal ip under network settings
+     Our aim is to eshtablish communication between containers seamlessly under one network.
+     Docker doesnt create networks for us like volume. we have to create networks.
+     $ docker create network <network-name-any>
+     To see list of networks: 
+     $ Docker network ls
+     If two or more containers are on same network we can use name instead of ip:
+
+Docker resolves ip Address:
+    To eshtablish container to local host communication docker uses host.docker.internal domain.
+    To eshtablish container to container communication docker requires a network to be created on our own 
+            and use container name as address.
+    Docker will not replace our source code, it simply detects the outgoing requests and 
+    resolves the ip for such requests.
+
+
+Docker network drivers:
+    The default network driver is bridge driver.
+    The driver can be set when a Network is created, simply by adding the --driver option.
+    example $ docker network create --driver bridge my-net
+    Docker also supports these alternative drivers - though you will use the "bridge" driver in most cases:
+    4 types of networks or network drivers in docker.
+    
+    host: is a networking mode in which a Docker container shares its network namespace with the host machine. 
+            The application inside the container can be accessed using a port at the host's IP address
+    
+    bridge: a bridge network uses a software bridge which allows containers connected to the same bridge network 
+    to communicate, while providing isolation from containers which are not connected to that bridge network.
+    
+    overlay: Multiple Docker daemons (i.e. Docker running on different machines) are able to connect with each other. 
+                Only works in "Swarm" mode which is a dated / almost deprecated way of connecting multiple containers
+    
+    macvlan: You can set a custom MAC address to a container - 
+                    this address can then be used for communication with that container
+    none: The none driver simply disables networking for a container, making it isolated from other containers.
+    
+
+
+
+
+

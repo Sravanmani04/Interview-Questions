@@ -34,6 +34,11 @@ For webapp to operate, it needs,
                 Postgresql
                 MariaDb.
 
+Basically Web-Based-Applications need 3-TIER Architecture
+Tier-1 : GUI that resides At client end, usually a thin client (Eg browser)
+Tier-2: This is the middle Tier, Which consists of Application server (eg tomcat)
+Tier-3: This is Backend Servers(eg: Database servers)
+
 8 types of web applications.
 
 1) Static web application
@@ -128,6 +133,8 @@ Animated Webapplications:
             SEO is Search Engine optimisation -improve your website visibility when customer search for their products or services)
             Examples:
                     Blizzard, waze, marie webber ...etc......
+
+                    
 Rich Internet Webapplications:
             These Are primary applications that has Functionality of many Desktop Applications.
             Designed to fix browser restrictions and rely on plugins on the customer side.

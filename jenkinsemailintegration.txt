@@ -1,0 +1,40 @@
+In this section we'll learn how to integrate Jenkins with Email using AWS SES & GMail.
+
+Having notifications via Email is quite useful, because if any Job fails, then Jenkins is going to notify you.
+
+For this in jenkins download mailer plugin 
+MANAGEPLUGINS->Available->search"Mailer plugin"
+
+Integrate AWS SES with jenkins
+
+login to aws-> aws ses-> verify domain or Email
+verify email with aws
+
+Now configure jenkins to ses
+managejenkins->configuresystem->email notification ->
+Provide these details 
+smtp server     # get this from smtp settings of aws ses
+port            # get this from smtp settings of aws ses  25,465 or 587
+username        # create smtp credentials from iam
+password        # create smtp credentials from iam
+use ssl         # chek box
+reply to address # our email
+before testing configuration in jenkins goto 
+jenkins location >  systemadmin email address > give our email
+now test configuartion this sends an email to our email as test
+
+above procedure is same instead change smtpserver 
+enable 2 step verification 
+under app passwords 
+create custom name generate password and 
+provide this generated token as password to gmail password
+test configuration now 
+it works
+
+Integrating notifications to our jobs
+
+
+After the above configuration done, in jenkins under post-build actions
+postbuildactions> emailnotification> send emails for every unstable build, 
+send seperate emails to individuals who broke build
+check box above notifications

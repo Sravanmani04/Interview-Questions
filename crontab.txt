@@ -1,0 +1,157 @@
+goto project> build triggers> Trigger builds remotely (e.g., from scripts)
+                              Build after other projects are built
+                              Build periodically
+                              GitHub hook trigger for GITScm polling
+                              Poll SCM
+
+######################################## Trigger builds remotely ##################################################
+Trigger builds remotely : To Build trigger job remotely we use this option. check the box first under 
+nameofjob> configure>check option Trigger builds remotely
+    This requires a jenkins url and Authentication token.
+    jenkins url look as - JENKINS_URL/job/<NAME OF THE JOB>/build?token=TOKEN_NAME
+    where JENKINS_URL = jenkins ip with port 8080
+        <NAME OF THE JOB> = jenkins job which you wanna trigger the build
+        TOKEN_NAME = it is the Authorization token you provide in jenkins 
+                     while configuring Trigger builds remotely job
+        we have to save this url to trigger the job remotely.
+######################################## Trigger builds remotely ##################################################
+
+
+Build after other projects are built: If your project depends on another project build then you should select 
+            Build after other projects are built option from the build triggers.
+
+###########################            Build periodically         :###############################################
+
+Build periodically: schedule here you will input expression so that it schedules the job at particular time
+for example if you schedule a job for every day and expression is 0 1 * * * it shows a warning. 
+that means there may be other projects scheduled at that time and to 
+avoid server overloading use expression H 1 * * * so that jenkins prioritse scheduling jobs.
+
+###########################            Build periodically         :###############################################
+
+###########################GitHub hook trigger for GITScm polling:###############################################
+This project is to BUild jenkins job Automaticallyon github commit using - GitHub hook trigger for GITScm polling:
+this how it works. go to git hub
+githubrepository>settings>webhooks>addWebhook>jenkinsipandport8080/github-webhook/, content type-applicationjson
+if you are using jenkins local host as ipaddress then you should following as localhost is not accessed via internet
+
+Ngroksetup:
+signup and download zipfile and store in a folder
+get your auth token from ngrok account 
+go to ngrok folder and open terminal
+in terminal pass command "ngrok.exe authtoken 'value' " . this will save in ngrok.yaml file in c.
+now in terminal pass command "ngrok http 8080" as my local host running port is 8080
+server gets connected and forwards the local hosst url to another url in server 
+get that url and paste that in paste in github webhooks.
+in ngrok server they send ping then crosscheck that webhook is connected or not by checking the ping.
+
+###########################GitHub hook trigger for GITScm polling:###############################################
+
+
+#######################################        PollSCM        ####################################################
+Click on the “Configure” of the job created in the Jenkins dashboard.
+Click on build triggers in the configure settings and select the Poll SCM.
+Enter the desired cron to poll the SCM. Here we have given * * * * which means the Jenkins polls the SCM every minute. 
+#######################################        PollSCM        ####################################################
+Prerequsites for above :
+Cron job format:
+
+* * * * * - mins hours day month dayofweek
+
+Field	            Format of valid values
+Minute	                    0-59
+Hour	                    0-23
+Day of the month	        1-31
+Month	            1-12 (or JAN to DEC)
+Day of the week	    0-6 (or SUN to SAT; or 7 for Sunday)
+
+Sample schedule	Cron job format
+Every minute	* * * * *
+Every Saturday at 23:45 (11:45 PM)	45 23 * * 6
+Every Monday at 09:00 (9:00 AM)	0 9 * * 1
+Every Sunday at 04:05 (4:05 AM)	5 4 * * SUN
+Every weekday (Mon-Fri) at 22:00 (10:00 PM)	0 22 * * 1-5
+
+Special characters
+A field can contain an asterisk (*), which always stands for "first-last".
+Ranges are two numbers separated with a hyphen (-) and the specified range is inclusive.
+Following a range with /NUMBER specifies skips of the number's value through the range.
+    For example, both 0-23/2 and */2 can be used in the Hour field to specify execution every two hours.
+A list is a set of numbers (or ranges) separated by commas (,). 
+    For example, 1,2,5,6 in the Day of the month field specifies an execution on the first, second, fifth, and sixth days of the month.
+
+To edit or create your own crontab file - crontab -e
+
+Syntax of crontab 
+1 2 3 4 5 /path/to/command arg1 arg2
+OR
+1 2 3 4 5 /root/backup.sh
+Where,
+1: Minute (0-59)
+2: Hours (0-23)
+3: Day (0-31)
+4: Month (0-12 [12 == December])
+5: Day of the week(0-7 [7 or 0 == sunday])
+/path/to/command – Script or command name to schedule
+
+
+for system jobs:
+1 2 3 4 5 USERNAME /path/to/command arg1 arg2
+OR
+1 2 3 4 5 USERNAME /path/to/script.sh
+
+Example: Run backup cron job script
+If you wished to have a script named /root/backup.sh run every day at 3am, 
+your crontab entry would look like as follows. First, install your cronjob by running the following command:
+crontab -e
+Append the following entry:
+0 3 * * * /root/backup.sh
+
+To run /path/to/command five minutes after midnight, every day, enter:
+5 0 * * * /path/to/command
+
+Let us run /path/to/script.sh at 2:15pm on the first of every month, enter:
+15 14 1 * * /path/to/script.sh
+
+In this example, I am running /scripts/phpscript.php at 10 pm on weekdays, enter:
+0 22 * * 1-5 /scripts/phpscript.php
+
+Execute /root/scripts/perl/perlscript.pl at 23 minutes after midnight, 2am, 4am …, everyday, enter:
+23 0-23/2 * * * /root/scripts/perl/perlscript.pl
+
+Want to run Unix command say /path/to/unixcommand at 5 mins  after 4 every Sunday? enter:
+5 4 * * sun /path/to/unixcommand
+
+How do I disable email output?
+By default the output of a command or a script (if any produced), will be email to your local email account. To stop receiving email output from crontab you need to append >/dev/null 2>&1. For example:
+
+0 3 * * * /root/backup.sh >/dev/null 2>&1
+
+To mail output to particular email account let us say vivek@nixcraft.in you need to define MAILTO variable as follows:
+
+MAILTO="vivek@nixcraft.in"
+0 3 * * * /root/backup.sh >/dev/null 2>&1
+
+List all your cron jobs
+Type the following command:
+crontab -l
+crontab -u username -l
+
+To remove or erase all crontab jobs use the following command:
+# Delete the current cron jobs #
+crontab -r
+## Delete job for specific user. Must be run as root user ##
+crontab -r -u username
+
+Use special string to save time
+Instead of the first five fields, you can use any one of eight special strings. It will not just save your time but it will improve readability.
+
+Special string	Meaning
+@reboot	Run once, at startup.
+@yearly	Run once a year, “0 0 1 1 *”.
+@annually	(same as @yearly)
+@monthly	Run once a month, “0 0 1 * *”.
+@weekly	Run once a week, “0 0 * * 0”.
+@daily	Run once a day, “0 0 * * *”.
+@midnight	(same as @daily)
+@hourly	Run once an hour, “0 * * * *”.

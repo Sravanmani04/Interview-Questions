@@ -1,0 +1,59 @@
+In this we are going to take backup of mysql database and restore in linux.
+
+############################################################################################
+                                        Taking Backup
+############################################################################################
+using 
+$ mysqldump >
+
+To take backup of single database
+$ mysqldump -u root -p -h localhost db1 > db1.sql
+# where mysqldump is a command, -u user, -h hostname, db1 is a database name, db1.sql is a database backup name and 
+> is the operator to replace or create db in file. 
+
+To take backup of a multiple databases: (for example two databases)
+$ mysqldump -u <user> -p -h <hostname> --databases <database1> <database2> > <backupname>.sql
+for multiple databases we can pass n number of databases after specifying --databases 
+
+To take backup of a all databases:
+$ mysqldump -u <user> -p -h <hostname> --all-databases <database1> <database2> > <backupname>.sql
+Here we can take back up of all the databases by specifying --all-databases
+
+To take backup of a tables from a database:
+$ mysqldump -u root -p -h localhost db1 table1 table2 > tables.sql
+# where mysqldump is a command, -u user, -h hostname, db1 is a database name, 
+table1 and table2 are the tables to be backed up from a database and table.sql is a database tables backup name. 
+
+
+############################################################################################
+                                        Restoring backup:
+############################################################################################
+using 
+$ mysql <
+
+To restore all database 
+$ mysql -u root -p -h localhost < all_db.sql #all_db.sql is the database from which you wanna restore.
+
+To restore a database to one particular database:
+$ mysql -u root -p -h localhost db1 < db1.sql
+
+to restore two databases is similar to restoring all databases.
+
+To restore tables of a database to a database:
+$ mysql -u root -p -h localhost db1 < tables.sql # tables.sql is the backup of tables.
+
+##############################################################################################
+                        AUTOMATE BACKUP USING RSYNC AND CRONTAB IN LINUX
+##############################################################################################
+
+
+rsync - remote synchronisation 
+        Its a software utility for unix like systems thats syncs files and directories 
+        between two machines or hosts, one of them will be source or localhost from which the files to be synced 
+         and the other is the remote host where the files or directories are synchronised.
+
+         TO check for rsync present in rhel systems use:
+         $ rpm -qa | grep rsync
+         # rpm is a RPM package manager, -q is for query and a for query all installed packages.
+
+
