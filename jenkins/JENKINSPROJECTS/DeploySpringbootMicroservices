@@ -1,0 +1,117 @@
+https://www.youtube.com/watch?v=C1BlN66s9yo&t=1524s   # youtube video
+https://www.coachdevops.com/2022/01/deploy-springboot-microservices-app_11.html #webpage.
+
+
+Procedure:
+Get The working code from git.
+Create a Docker file with all the dependencies.
+Write kubernetes manifest file in order to deploy into eks cluster.
+Set up jenkins,git, maven,docker where git clones the source code, maven builds the code, docker creates and pushes the image into ecr and ecr deploys the image into eks.
+
+To Start with the procedure
+    I created a ubuntu18 instance with t2.medium type instance
+    Installed jenkins. # see jenkins installation
+    installed maven, eksctl, awscli, kubectl on jenkins instance.
+    In order to create eks cluster with jenkins instance, jenkins instance need to have required privillages.
+    I created IAM role with Administrator policy.
+    Attach this policy to jenkins instance.
+    Here we have to switch to jenkins user because jenkins is the one who creating cluster.
+    Now create Cluster using eksctl
+    $  eksctl create cluster --name demo-eks --region us-east-1 --nodegroup-name my-nodes --node-type t3.small --managed --nodes 2
+
+
+
+
+
+
+
+Create Ecr repo in aws 
+jenkins master is up and running
+Docker installed on jenkins instance.
+$ sudo apt install docker.io -y
+Add user ubuntu to the docker group to execute dockerr commands.
+$ sudo usermod -aG docker $USER
+
+Restart jenkins instance 
+After login 
+$ sudo systemctl start docker
+$ sudo systemctl enable docker
+$ sudo systemctl status docker # to see the status of the Docker.
+
+Add jenkins user to the Docker group
+$ sudo usermod -aG docker jenkins
+
+Restart jenkins and docker services as well
+sudo service jenkins restart
+sudo systemctl daemon-reload
+
+sudo service docker stop
+sudo service docker start
+
+Install Docker, docker pipeline, kubernetes pipeline plugin
+
+To build the jar file we need to configure maven cred MAVEN3 in jenkins under global tool configuration.
+
+After this start constructing pipeline job
+ give tools for maven
+ environment variable for docker registry
+ build the docker image (docker.build registry # where registry variable specified under jenkins environment variables )
+ Push the image into ecr 
+ Login to ecr first and execute docker push command as pipeline shown below.
+
+ now create credentials for kubernetes cluster using kubeconfigfile.
+ search for kubeconfig file under /var/lib/jenkins/.kube/config
+ And save the file locally.save it
+goto jenkins and save this file under manage credentials> secret text> save it
+Pipeline for jenkins
+
+pipeline {
+   tools {
+        maven 'Maven3'
+    }
+    agent any
+    environment {
+        registry = "account_id.dkr.ecr.us-east-2.amazonaws.com/my-docker-repo"
+    }
+   
+    stages {
+        stage('Cloning Git') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/akannan1087/springboot-app']]])     
+            }
+        }
+      stage ('Build') {
+          steps {
+            sh 'mvn clean install'           
+            }
+      }
+    // Building Docker images
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry 
+        }
+      }
+    }
+   
+    // Uploading Docker images into AWS ECR
+    stage('Pushing to ECR') {
+     steps{  
+         script {
+                sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin account_id.dkr.ecr.us-east-2.amazonaws.com'
+                sh 'docker push account_id.dkr.ecr.us-east-2.amazonaws.com/my-docker-repo:latest'
+         }
+        }
+      }
+
+       stage('K8S Deploy') {
+        steps{   
+            script {
+                withKubeConfig([credentialsId: 'K8S', serverUrl: '']) {
+                sh ('kubectl apply -f  eks-deploy-k8s.yaml')
+                }
+            }
+        }
+       }
+    }
+}
