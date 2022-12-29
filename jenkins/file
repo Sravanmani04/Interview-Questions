@@ -1,0 +1,51 @@
+pipeline {
+    tools{
+        maven 'MAVEN3'
+    }
+    agent any
+
+    stages {
+        stage('Checkout to GIT') {
+            steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Sravanmani04/java-jsp-diary.git']]])
+            }
+        }
+        stage("Build jsp-dairy"){
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        stage("Archiving Artifacts"){
+            steps{
+               archiveArtifacts artifacts: 'target/java-jsp-diary.war', followSymlinks: false 
+            }
+        }
+        stage('UNIT TEST'){
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('INTEGRATION TEST'){
+            steps {
+                sh 'mvn verify -DskipUnitTests'
+            }
+        }
+        stage ('CODE ANALYSIS WITH CHECKSTYLE'){
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+            post {
+                success {
+                    echo 'Generated Analysis Result'
+                }
+            }
+        }
+        stage("Build docker file") {
+            steps{
+                script{
+                    docker.build
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+Jenkins parameterised builds:
+    In jenkins After creating a job we can see a option
+        This project is parameterized. select it, the parameters can be as below types:
+            boolean parameters
+            choice prarameters
+            credentials parameterised
+            file parameter
+            git parameter          # This comes with downloading git parameter plugin
+            list subversion tags
+            multi-line string parameter
+            password parameter
+            Run parameter
+            string parameter
+            Active choice parameter
+            Active choice reactive parameter
+            Active choice reactive reference parameter
+
+How to use Boolean parameters:?
