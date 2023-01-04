@@ -1,0 +1,17 @@
+Sonarcube is one of the static code analysis tools. 
+used for 
+        finding issues in the code
+        Violations in the code
+        Code complaints etc can be deducted with sonarcube.
+Sonarcube comes with two components: 
+        1) sonarcube code scanner
+        2)SonarCube Database.(DB could be mysql oracle sql, or postgresql)
+
+Sonar code analysis and integrate with jenkins.
+sonarcube default port is 9000.
+Sonarcube is a java based tool which makes java a dependency for sonarcube.
+Install java
+$ sudo apt-get update
+$ sudo apt install default-jdk -y
+
+install postgres

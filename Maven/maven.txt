@@ -1,4 +1,5 @@
 Maven 
+https://www.javapedia.net/Maven-Interview-questions-II#qanda608
 maven is a project management and dependency management tool.
 maven lifecycle consists of 
     validate

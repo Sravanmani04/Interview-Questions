@@ -123,6 +123,20 @@
                take snapshot
                restore to point in time
                migrate snapshot
+
+How do you attach RDS to ec2?
+prerequisites:
+install mariadb or mysql on server
+start and enable them 
+check for status
+to eshtablish connection:
+getthese parameters
+userid
+password
+endpoint
+port
+$ mysql -h <endpoint> -P<port> -u <user> -p<Password>
+
 8) What is a loadbalancer and round robin method? 
      Load balancing refers to efficiently distributing incoming network traffic across a group of backend servers.
      Round robin method: A simple method for load balancing servers.

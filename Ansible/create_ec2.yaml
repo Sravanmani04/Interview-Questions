@@ -1,0 +1,7 @@
+---
+- name: Provisioning ec2 instances using Ansible 
+  hosts: localhost
+  connection: local 
+  gather_facts: False
+  tags: Provisioning 
+  
